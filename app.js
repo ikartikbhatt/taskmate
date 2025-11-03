@@ -7,7 +7,6 @@ const cors = require("cors");
 const serverListenMessage = require("./helper/serverListenMessage");
 const logger = require("./helper/logger");
 const connectToDb = require("./db/config");
-const { error } = require("winston");
 
 const app = express();
 
