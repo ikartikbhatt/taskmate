@@ -1,50 +1,35 @@
 {
   level: 'info',
   message: 'Environment variables loaded from .env file',
-  timestamp: '2025-11-03 15:11:47'
+  timestamp: '2025-11-05 21:42:21'
 }
 {
   level: 'info',
   message: 'CORS configured to allow requests from http://localhost:3000',
-  timestamp: '2025-11-03 15:11:47'
+  timestamp: '2025-11-05 21:42:21'
 }
 {
   level: 'info',
   message: 'Middleware for JSON and URL-encoded data configured',
-  timestamp: '2025-11-03 15:11:47'
+  timestamp: '2025-11-05 21:42:21'
 }
 {
   level: 'info',
   message: 'DB Connection Successful',
-  timestamp: '2025-11-03 15:11:50'
+  timestamp: '2025-11-05 21:42:22'
 }
 {
   level: 'info',
   message: 'Server Running Fine at http://localhost:8080',
-  timestamp: '2025-11-03 15:11:50'
+  timestamp: '2025-11-05 21:42:22'
 }
 {
   level: 'info',
-  message: 'Environment variables loaded from .env file',
-  timestamp: '2025-11-03 15:28:38'
-}
-{
-  level: 'info',
-  message: 'CORS configured to allow requests from http://localhost:3000',
-  timestamp: '2025-11-03 15:28:38'
-}
-{
-  level: 'info',
-  message: 'Middleware for JSON and URL-encoded data configured',
-  timestamp: '2025-11-03 15:28:38'
-}
-{
-  level: 'info',
-  message: 'DB Connection Successful',
-  timestamp: '2025-11-03 15:28:40'
-}
-{
-  level: 'info',
-  message: 'Server Running Fine at http://localhost:8080',
-  timestamp: '2025-11-03 15:28:40'
+  message: 'user SignupValidator passed >>>',
+  data: {
+    name: 'kartik',
+    email: 'kartikbhatt@gmail.com',
+    password: 'kartikbhatt'
+  },
+  timestamp: '2025-11-05 21:43:26'
 }

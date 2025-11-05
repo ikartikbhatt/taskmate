@@ -7,7 +7,7 @@ const cors = require("cors");
 const serverListenMessage = require("./helper/serverListenMessage");
 const logger = require("./helper/logger");
 const connectToDb = require("./db/config");
-
+const authRouter = require("./routes/auth/userAuthRoute");
 const app = express();
 
 // configuring dotenv in main file to use it across all over the project
@@ -60,3 +60,4 @@ connectToDb()
 //routes ------------------------->
 
 //USER-ROUTES >>>>>>>>>>>>>>>>>>>>>>>>>>
+app.use("/taskmate/auth", authRouter);
