@@ -20,8 +20,6 @@ async function loginValidator(req, res, next) {
       level: "info",
       message: "user SignupValidator passed >>>",
     });
-
-    console.log("ok report ");
   } catch (err) {
     logger.log({
       level: "info",
