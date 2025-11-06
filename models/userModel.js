@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema(
       trim: true,
       enum: ["user", "admin"],
       default: "user",
+      lowercase:true
     },
     designation: {
       type: String,

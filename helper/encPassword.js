@@ -8,7 +8,7 @@ async function encPass(password, key, hashedPass, salt = 10) {
       const passSalt = await bcrypt.genSalt(salt);
       const hashedPass = await bcrypt.hash(password, passSalt);
       return hashedPass;
-    } else if (key === "dcrypt") {
+    } else if (key === "decrypt") {
       const passCompare = await bcrypt.compare(password, hashedPass);
       return passCompare;
     } else {

@@ -7,12 +7,11 @@ const sendResponse = require("../../helper/sendResponse");
 async function signUp(req, res) {
   try {
     const data = req.userData;
-    console.log(data);
 
     const { name, email, password, role } = data;
 
-    const hashPassword = await encPass(password, { encrypt: true });
-    const newUser = new user({ name, email, password: hashPassword });
+    const hashPassword = await encPass(password, "encrypt");
+    const newUser = new user({ name, email, password: hashPassword,role });
     await newUser.save();
 
     return sendResponse(res, 200, "success", "Signed up successfully");
