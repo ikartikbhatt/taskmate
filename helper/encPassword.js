@@ -8,14 +8,14 @@ async function encPass(password, key, hashedPass, salt = 10) {
       const passSalt = await bcrypt.genSalt(salt);
       const hashedPass = await bcrypt.hash(password, passSalt);
       return hashedPass;
-    } else if (key === "dcrypt") {
+    } else if (key === "decrypt") {
       const passCompare = await bcrypt.compare(password, hashedPass);
       return passCompare;
     } else {
       logger.log({
         level: "info",
         message:
-          "error in helper encPassword encpryt and dcrypt not provided>>>>",
+          "error in helper encPassword encrypt and decrypt not provided>>>>",
       });
     }
   } catch (err) {
