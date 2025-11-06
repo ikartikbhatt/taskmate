@@ -1,0 +1,6 @@
+{
+  level: 'error',
+  message: 'error in helper encPassword>>>>',
+  error: 'data and hash arguments required',
+  timestamp: '2025-11-06 19:01:06'
+}

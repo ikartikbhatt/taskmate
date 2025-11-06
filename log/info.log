@@ -1,355 +1,67 @@
 {
   level: 'info',
-  message: 'user SignupValidator passed >>>',
-  timestamp: '2025-11-06 01:49:06'
-}
-{
-  level: 'info',
-  message: 'Signed up successfully',
-  timestamp: '2025-11-06 01:49:06'
-}
- {
-  level: 'info',
   message: 'Environment variables loaded from .env file',
-  timestamp: '2025-11-06 01:49:17'
+  timestamp: '2025-11-06 19:00:49'
 }
 {
   level: 'info',
   message: 'CORS configured to allow requests from http://localhost:3000',
-  timestamp: '2025-11-06 01:49:17'
+  timestamp: '2025-11-06 19:00:49'
 }
 {
   level: 'info',
   message: 'Middleware for JSON and URL-encoded data configured',
-  timestamp: '2025-11-06 01:49:17'
+  timestamp: '2025-11-06 19:00:49'
 }
 {
   level: 'info',
   message: 'DB Connection Successful',
-  timestamp: '2025-11-06 01:49:18'
+  timestamp: '2025-11-06 19:00:50'
 }
 {
   level: 'info',
   message: 'Server Running Fine at http://localhost:8080',
-  timestamp: '2025-11-06 01:49:18'
+  timestamp: '2025-11-06 19:00:50'
 }
 {
   level: 'info',
   message: 'Environment variables loaded from .env file',
-  timestamp: '2025-11-06 01:52:05'
+  timestamp: '2025-11-06 19:01:03'
 }
 {
   level: 'info',
   message: 'CORS configured to allow requests from http://localhost:3000',
-  timestamp: '2025-11-06 01:52:05'
+  timestamp: '2025-11-06 19:01:03'
 }
 {
   level: 'info',
   message: 'Middleware for JSON and URL-encoded data configured',
-  timestamp: '2025-11-06 01:52:05'
+  timestamp: '2025-11-06 19:01:03'
 }
 {
   level: 'info',
   message: 'DB Connection Successful',
-  timestamp: '2025-11-06 01:52:06'
+  timestamp: '2025-11-06 19:01:04'
 }
 {
   level: 'info',
   message: 'Server Running Fine at http://localhost:8080',
-  timestamp: '2025-11-06 01:52:06'
+  timestamp: '2025-11-06 19:01:04'
 }
 {
   level: 'info',
   message: 'user SignupValidator passed >>>',
-  timestamp: '2025-11-06 01:52:09'
+  timestamp: '2025-11-06 19:01:06'
+}
+{
+  level: 'error',
+  message: 'error in helper encPassword>>>>',
+  error: 'data and hash arguments required',
+  timestamp: '2025-11-06 19:01:06'
 }
 {
   level: 'info',
-  message: 'Signed up successfully',
-  timestamp: '2025-11-06 01:52:09'
-}
-{
-  level: 'info',
-  message: 'user SignupValidator passed >>>',
-  timestamp: '2025-11-06 01:52:12'
-}
-{
-  level: 'info',
-  message: 'email already exist',
-  timestamp: '2025-11-06 01:52:12'
-}
-{
-  level: 'info',
-  message: 'Environment variables loaded from .env file',
-  timestamp: '2025-11-06 01:53:41'
-}
-{
-  level: 'info',
-  message: 'CORS configured to allow requests from http://localhost:3000',
-  timestamp: '2025-11-06 01:53:41'
-}
-{
-  level: 'info',
-  message: 'Middleware for JSON and URL-encoded data configured',
-  timestamp: '2025-11-06 01:53:41'
-}
-{
-  level: 'info',
-  message: 'DB Connection Successful',
-  timestamp: '2025-11-06 01:53:42'
-}
-{
-  level: 'info',
-  message: 'Server Running Fine at http://localhost:8080',
-  timestamp: '2025-11-06 01:53:42'
-}
-{
-  level: 'info',
-  message: 'Environment variables loaded from .env file',
-  timestamp: '2025-11-06 01:53:44'
-}
-{
-  level: 'info',
-  message: 'CORS configured to allow requests from http://localhost:3000',
-  timestamp: '2025-11-06 01:53:44'
-}
-{
-  level: 'info',
-  message: 'Middleware for JSON and URL-encoded data configured',
-  timestamp: '2025-11-06 01:53:44'
-}
-{
-  level: 'info',
-  message: 'DB Connection Successful',
-  timestamp: '2025-11-06 01:53:45'
-}
-{
-  level: 'info',
-  message: 'Server Running Fine at http://localhost:8080',
-  timestamp: '2025-11-06 01:53:45'
-}
-{
-  level: 'info',
-  message: 'user SignupValidator passed >>>',
-  timestamp: '2025-11-06 01:58:01'
-}
-{
-  level: 'info',
-  message: 'Signed up successfully',
-  timestamp: '2025-11-06 01:58:01'
-}
-{
-  level: 'info',
-  message: 'user SignupValidator passed >>>',
-  timestamp: '2025-11-06 01:58:16'
-}
-{
-  level: 'info',
-  message: 'Signed up successfully',
-  timestamp: '2025-11-06 01:58:16'
-}
-{
-  level: 'info',
-  message: 'Environment variables loaded from .env file',
-  timestamp: '2025-11-06 02:00:36'
-}
-{
-  level: 'info',
-  message: 'CORS configured to allow requests from http://localhost:3000',
-  timestamp: '2025-11-06 02:00:36'
-}
-{
-  level: 'info',
-  message: 'Middleware for JSON and URL-encoded data configured',
-  timestamp: '2025-11-06 02:00:36'
-}
-{
-  level: 'info',
-  message: 'DB Connection Successful',
-  timestamp: '2025-11-06 02:00:36'
-}
-{
-  level: 'info',
-  message: 'Server Running Fine at http://localhost:8080',
-  timestamp: '2025-11-06 02:00:36'
-}
-{
-  level: 'info',
-  message: 'Environment variables loaded from .env file',
-  timestamp: '2025-11-06 02:00:53'
-}
-{
-  level: 'info',
-  message: 'CORS configured to allow requests from http://localhost:3000',
-  timestamp: '2025-11-06 02:00:53'
-}
-{
-  level: 'info',
-  message: 'Middleware for JSON and URL-encoded data configured',
-  timestamp: '2025-11-06 02:00:53'
-}
-{
-  level: 'info',
-  message: 'DB Connection Successful',
-  timestamp: '2025-11-06 02:00:53'
-}
-{
-  level: 'info',
-  message: 'Server Running Fine at http://localhost:8080',
-  timestamp: '2025-11-06 02:00:53'
-}
-{
-  level: 'info',
-  message: 'Environment variables loaded from .env file',
-  timestamp: '2025-11-06 02:02:18'
-}
-{
-  level: 'info',
-  message: 'CORS configured to allow requests from http://localhost:3000',
-  timestamp: '2025-11-06 02:02:18'
-}
-{
-  level: 'info',
-  message: 'Middleware for JSON and URL-encoded data configured',
-  timestamp: '2025-11-06 02:02:18'
-}
-{
-  level: 'info',
-  message: 'DB Connection Successful',
-  timestamp: '2025-11-06 02:02:19'
-}
-{
-  level: 'info',
-  message: 'Server Running Fine at http://localhost:8080',
-  timestamp: '2025-11-06 02:02:19'
-}
-{
-  level: 'info',
-  message: 'Environment variables loaded from .env file',
-  timestamp: '2025-11-06 02:03:02'
-}
-{
-  level: 'info',
-  message: 'CORS configured to allow requests from http://localhost:3000',
-  timestamp: '2025-11-06 02:03:02'
-}
-{
-  level: 'info',
-  message: 'Middleware for JSON and URL-encoded data configured',
-  timestamp: '2025-11-06 02:03:02'
-}
-{
-  level: 'info',
-  message: 'DB Connection Successful',
-  timestamp: '2025-11-06 02:03:03'
-}
-{
-  level: 'info',
-  message: 'Server Running Fine at http://localhost:8080',
-  timestamp: '2025-11-06 02:03:03'
-}
-{
-  level: 'info',
-  message: 'Environment variables loaded from .env file',
-  timestamp: '2025-11-06 02:03:14'
-}
-{
-  level: 'info',
-  message: 'CORS configured to allow requests from http://localhost:3000',
-  timestamp: '2025-11-06 02:03:14'
-}
-{
-  level: 'info',
-  message: 'Middleware for JSON and URL-encoded data configured',
-  timestamp: '2025-11-06 02:03:14'
-}
-{
-  level: 'info',
-  message: 'DB Connection Successful',
-  timestamp: '2025-11-06 02:03:15'
-}
-{
-  level: 'info',
-  message: 'Server Running Fine at http://localhost:8080',
-  timestamp: '2025-11-06 02:03:15'
-}
-{
-  level: 'info',
-  message: 'Environment variables loaded from .env file',
-  timestamp: '2025-11-06 02:03:33'
-}
-{
-  level: 'info',
-  message: 'CORS configured to allow requests from http://localhost:3000',
-  timestamp: '2025-11-06 02:03:33'
-}
-{
-  level: 'info',
-  message: 'Middleware for JSON and URL-encoded data configured',
-  timestamp: '2025-11-06 02:03:33'
-}
-{
-  level: 'info',
-  message: 'DB Connection Successful',
-  timestamp: '2025-11-06 02:03:34'
-}
-{
-  level: 'info',
-  message: 'Server Running Fine at http://localhost:8080',
-  timestamp: '2025-11-06 02:03:34'
-}
-{
-  level: 'info',
-  message: 'Environment variables loaded from .env file',
-  timestamp: '2025-11-06 02:04:03'
-}
-{
-  level: 'info',
-  message: 'CORS configured to allow requests from http://localhost:3000',
-  timestamp: '2025-11-06 02:04:03'
-}
-{
-  level: 'info',
-  message: 'Middleware for JSON and URL-encoded data configured',
-  timestamp: '2025-11-06 02:04:03'
-}
-{
-  level: 'info',
-  message: 'DB Connection Successful',
-  timestamp: '2025-11-06 02:04:04'
-}
-{
-  level: 'info',
-  message: 'Server Running Fine at http://localhost:8080',
-  timestamp: '2025-11-06 02:04:04'
-}
-{
-  level: 'info',
-  message: 'Environment variables loaded from .env file',
-  timestamp: '2025-11-06 02:05:09'
-}
-{
-  level: 'info',
-  message: 'CORS configured to allow requests from http://localhost:3000',
-  timestamp: '2025-11-06 02:05:09'
-}
-{
-  level: 'info',
-  message: 'Middleware for JSON and URL-encoded data configured',
-  timestamp: '2025-11-06 02:05:09'
-}
-{
-  level: 'info',
-  message: 'DB Connection Successful',
-  timestamp: '2025-11-06 02:05:10'
-}
-{
-  level: 'info',
-  message: 'Server Running Fine at http://localhost:8080',
-  timestamp: '2025-11-06 02:05:10'
-}
-{
-  level: 'info',
-  message: 'config.json file parsing successful',
-  timestamp: '2025-11-06 14:27:02'
+  message: 'error in loginController >>>>>',
+  error: 'sendResponse is not defined',
+  timestamp: '2025-11-06 19:01:06'
 }

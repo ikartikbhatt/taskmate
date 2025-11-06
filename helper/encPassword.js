@@ -15,7 +15,7 @@ async function encPass(password, key, hashedPass, salt = 10) {
       logger.log({
         level: "info",
         message:
-          "error in helper encPassword encrypt and decrypt not provided>>>>",
+          "error in helper encPassword encpryt and dcrypt not provided>>>>",
       });
     }
   } catch (err) {

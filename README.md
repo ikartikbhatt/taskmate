@@ -25,7 +25,7 @@ response body : {
 status : success,
 message : 'user created successfully <username>  
  data : <data>
-}
+};
 
 ## login
 
@@ -36,7 +36,7 @@ response body : {
 status : success,
 message : 'user logged in successfully <username>  
  data : <data>
-}
+};
 
 ## logout
 
@@ -45,7 +45,7 @@ method : POST
 response body : {
 status : success,
 message : 'user logged out successfully <username>  
- }
+ };
 
 ## User Api
 
@@ -57,7 +57,7 @@ response body : {
 status : success,
 message : 'user profile fetched successfully <username>  
  data : <data>
-}
+};
 
 ## reset password
 
@@ -68,7 +68,7 @@ response body : {
 status : success,
 message : 'user password changed successfully <username>  
  data : <data>
-}
+};
 
 ## forget password
 
