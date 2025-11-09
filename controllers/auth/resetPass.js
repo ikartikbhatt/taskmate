@@ -6,18 +6,13 @@ const logger = require("../../helper/logger");
 // reset pass
 async function resetPass(req, res) {
   try {
-    const { oldPassword, newPassword } = req.body;
+    const { oldPassword, newPassword } = req.userPassword;
     const userId = req.userId;
 
-    if (!userId) {
-      return sendResponse(res, 400, "failure", "unauthorized");
-    }
-
+ 
     // find user
     const user = await userModel.findById(userId);
-    if (!user) {
-      return sendResponse(res, 400, "failure", "User not found");
-    }
+
 
     const matchOldPass = await encPass(oldPassword, "decrypt", user.password);
     if (!matchOldPass) {

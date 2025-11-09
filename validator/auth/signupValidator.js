@@ -4,11 +4,11 @@ const userModel = require("../../models/userModel");
 const config = require("../../config/config.json");
 
 // email
-const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const emailFormat =  new RegExp( config.regex.emailRegex);
+
 
 // password
-const passwordFormat =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+const passwordFormat = new RegExp(config.regex.passRegex);
 
 // signup
 async function signupValidator(req, res, next) {

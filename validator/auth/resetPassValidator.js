@@ -18,7 +18,7 @@ function resetPassValidator(req, res, next) {
       );
     }
 
-    if (oldPassword == newPassword) {
+    if (oldPassword === newPassword) {
       return sendResponse(
         res,
         400,
@@ -44,6 +44,7 @@ function resetPassValidator(req, res, next) {
         "Password must be in proper format"
       );
     }
+      req.userPassword = {oldPassword,newPassword}
   } catch (err) {
     logger.log({
       level: "info",
