@@ -9,10 +9,8 @@ async function resetPass(req, res) {
     const { oldPassword, newPassword } = req.userPassword;
     const userId = req.userId;
 
- 
     // find user
     const user = await userModel.findById(userId);
-
 
     const matchOldPass = await encPass(oldPassword, "decrypt", user.password);
     if (!matchOldPass) {

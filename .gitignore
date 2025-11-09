@@ -4,8 +4,10 @@ node_modules/
 ##environment variables
 .env
 
-##logging
-log/
+#logging
+**/log/
+# *.log
+
 
 ##git push file
 gitmainpush

@@ -4,8 +4,7 @@ const userModel = require("../../models/userModel");
 const config = require("../../config/config.json");
 
 // email
-const emailFormat =  new RegExp( config.regex.emailRegex);
-
+const emailFormat = new RegExp(config.regex.emailRegex);
 
 // password
 const passwordFormat = new RegExp(config.regex.passRegex);

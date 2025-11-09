@@ -9,7 +9,7 @@ async function loginValidator(req, res, next) {
     if (!email || !password) {
       return sendResponse(res, 400, "failure", "provide proper input");
     }
-    //regex email , password 
+    //regex email , password
     const user = await userModel.findOne({ email });
     if (!user) {
       return sendResponse(res, 400, "failure", "user does not exist");
