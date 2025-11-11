@@ -12,7 +12,7 @@ const passwordFormat = new RegExp(config.regex.passRegex);
 // signup
 async function signupValidator(req, res, next) {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
       return sendResponse(res, 400, "failure", "provide proper input");
@@ -56,16 +56,7 @@ async function signupValidator(req, res, next) {
       );
     }
 
-    //check for user roles
-    if (!config.userRoles.includes(role)) {
-      return sendResponse(
-        res,
-        400,
-        "failure",
-        "only user and admin roles are allowed as input"
-      );
-    }
-    req.userData = { name, email, password, role };
+    req.userData = { name, email, password };
     logger.log({
       level: "info",
       message: "user SignupValidator passed >>>",

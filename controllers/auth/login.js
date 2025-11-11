@@ -29,7 +29,7 @@ async function login(req, res) {
       return sendResponse(res, 200, "success", "user logged in successfully", {
         email: getUser.email,
         name: getUser.name,
-        role: getUser.role,
+        // role: getUser.role,
       });
     }
   } catch (err) {

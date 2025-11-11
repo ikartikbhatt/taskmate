@@ -5,7 +5,6 @@ const loginValidator = require("../../validator/auth/loginValidator");
 const login = require("../../controllers/auth/login");
 const authFn = require("../../middleware/authFn");
 const authRouter = express.Router();
-const userModel = require("../../models/userModel");
 const logout = require("../../controllers/auth/logout");
 const resetPassValidator = require("../../validator/auth/resetPassValidator");
 const resetPass = require("../../controllers/auth/resetPass");

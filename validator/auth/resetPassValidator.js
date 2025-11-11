@@ -1,8 +1,8 @@
 const sendResponse = require("../../helper/sendResponse");
+const config = require("../../config/config.json");
 
 // password
-const passwordFormat =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+const passwordFormat = new RegExp(config.regex.passRegex);
 
 // reset password
 function resetPassValidator(req, res, next) {
