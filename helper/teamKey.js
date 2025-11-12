@@ -12,4 +12,11 @@ async function generateTeamKey() {
   return teamKey;
 }
 
+
+
+
+
 module.exports = generateTeamKey;
+
+
+
