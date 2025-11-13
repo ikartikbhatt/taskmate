@@ -8,6 +8,8 @@ const serverListenMessage = require("./helper/serverListenMessage");
 const logger = require("./helper/logger");
 const connectToDb = require("./db/config");
 const authRouter = require("./routes/auth/userAuthRoute");
+const teamRouter = require("./routes/team/teamRoutes");
+const authFn = require("./middleware/authFn");
 const app = express();
 
 // configuring dotenv in main file to use it across all over the project
@@ -61,4 +63,4 @@ connectToDb()
 
 //USER-ROUTES >>>>>>>>>>>>>>>>>>>>>>>>>>
 app.use("/taskmate/auth", authRouter);
-
+app.use("/taskmate/team", authFn, teamRouter);

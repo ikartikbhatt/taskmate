@@ -1,14 +1,7 @@
-const crypto = require("crypto");
-const team = require("../models/teamModel");
+const { v4: uuidv4 } = require("uuid");
 
-// Generate Team key
 async function generateTeamKey() {
-  let teamKey = crypto.randomBytes(10).toString("hex").toUpperCase();
-  return teamKey;
+  return uuidv4().replace(/-/g, "").slice(0, 12).toUpperCase();
 }
 
-
 module.exports = generateTeamKey;
-
-
-

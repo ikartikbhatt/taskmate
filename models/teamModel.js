@@ -14,9 +14,9 @@ const teamSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
-    teamdescription:{
-      type:String,
-      trim:true,
+    teamdescription: {
+      type: String,
+      trim: true,
     },
     role: {
       type: String,
@@ -26,8 +26,8 @@ const teamSchema = new mongoose.Schema(
     pendingRequests: [
       {
         user: {
-          type:mongoose.Schema.Types.ObjectId,
-          ref:"user",
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "user",
         },
         requestedAt: { type: Date, default: Date.now },
       },

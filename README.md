@@ -78,79 +78,69 @@ message : 'user password changed successfully <username>
 
 ## verify otp
 
-
-
 ## TEAM API -- the one person make team is declared as an --> admin
 
-
-## TEAM -- frontend -- team-name , team-description , team-profilePicture 
+## TEAM -- frontend -- team-name , team-description , team-profilePicture
 
 ## THIS WEEK
 
 /list-all-team -- GET -- show list of all available teams where user is not a member or even admin
 
 response:{
-    teamName,
-    teamDescription,
-    teamPhoto,
-    adminName,
-    TotalNumber of members in team(inc admin)
+teamName,
+teamDescription,
+teamPhoto,
+adminName,
+TotalNumber of members in team(inc admin)
 }
 
-
-
-/createTeam  -- here we need to create a unique team key  
+/createTeam -- here we need to create a unique team key
 
 request : {
-    teamName:"", [mandatory]
-    teamDescription:"", [non-mandatory]
-    teamPhoto:"", [non-mandatory]
+teamName:"", [mandatory]
+teamDescription:"", [non-mandatory]
+teamPhoto:"", [non-mandatory]
 }
 
 response : {
-    teamName,
-    teamKey
+teamName,
+teamKey
 }
-
 
 /deleteTeam -- need to remove full document
 
 request:{
-    teamName:" "[mandatory]
+teamName:" "[mandatory]
 }
 
 response :{message : team deleted successfully}
 
-
-
-/updateTeam -- need to keep team key same 
+/updateTeam -- need to keep team key same
 
 request:{
-     teamName:"", [mandatory]
-     teamDescription:"", [non-mandatory]
-     teamPhoto:"", [non-mandatory]
+teamName:"", [mandatory]
+teamDescription:"", [non-mandatory]
+teamPhoto:"", [non-mandatory]
 }
 
 response : {
-    teamName,
-    teamKey
+teamName,
+teamKey
 }
-
 
 /search-team -- POST
 
 request:{
-    teamKey or teamName
+teamKey or teamName
 }
 
 response:{
-    teamName,
-    teamDescription,
-    teamPhoto,
-    adminName,
-    TotalNumber of members in team(inc admin)
+teamName,
+teamDescription,
+teamPhoto,
+adminName,
+TotalNumber of members in team(inc admin)
 }
-
 
 ##################################################################################################################
 
@@ -158,28 +148,23 @@ NEXT WEEK THING
 
 /join-team
 
-
 /leave-team
 
-
-/list-my-Team -- (admin specific) -- get -- list all team created by that user -- 
+/list-my-Team -- (admin specific) -- get -- list all team created by that user --
 
 response:{
-    teamName,
-    teamDescription,
-    teamPhoto,
-    adminName,
-    TotalNumber of members in team(inc admin)
+teamName,
+teamDescription,
+teamPhoto,
+adminName,
+TotalNumber of members in team(inc admin)
 }
-
 
 /list-joined-team -- list of all team where admin is a user
 response:{
-    teamName,
-    teamDescription,
-    teamPhoto,
-    adminName,
-    TotalNumber of members in team(inc admin)
+teamName,
+teamDescription,
+teamPhoto,
+adminName,
+TotalNumber of members in team(inc admin)
 }
-
-
