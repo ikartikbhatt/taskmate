@@ -131,7 +131,7 @@ teamKey
 /search-team -- POST
 
 request:{
-teamKey or teamName
+teamKey
 }
 
 response:{

@@ -17,7 +17,7 @@ async function deleteTeamValidator(req, res, next) {
       adminUserId: userId,
     });
     if (!team) return sendResponse(res, 400, "failure", "team not found");
-    // console.log(team);
+   
 
     req.deleteTeam = { teamName: teamname, teamKey: team.teamKey };
   } catch (err) {

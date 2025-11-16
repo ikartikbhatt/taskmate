@@ -57,7 +57,7 @@ async function updateTeamNameValidator(req, res, next) {
         res,
         400,
         "failure",
-        "founf team with same name please use another team name"
+        "found team with same name please use another team name"
       );
 
     req.updateTeam = {
