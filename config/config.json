@@ -3,6 +3,7 @@
   "regex": {
     "emailRegex": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
     "passRegex": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
-    "teamNameRegex": "^[A-Za-z_-]+$"
+    "teamNameRegex": "^[A-Za-z_-]+$",
+    "mobileRegex": "^\\d{10}$"
   }
 }

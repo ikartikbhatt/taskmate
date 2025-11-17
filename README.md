@@ -168,3 +168,42 @@ teamPhoto,
 adminName,
 TotalNumber of members in team(inc admin)
 }
+
+
+
+
+
+
+
+
+
+///API 
+
+service : send otp
+
+POST :  http://localhost:8080/taskmate/otp/send-otp
+
+BODY : {
+    "email":"kartikworksss@gmail.com",
+    "mobile":"9310605985"
+}
+
+
+service : verify otp
+
+POST :  http://localhost:8080/taskmate/otp/verify-otp
+
+BODY : {
+    "email":"kartikworksss@gmail.com",
+    "otp":"670152"
+}
+
+
+service : forget password
+
+PATCH : http://localhost:8080/taskmate/auth/set-new-password
+
+BODY : {
+    "resetToken":"b8521a7d698280932eff9685e580b83aa276dacf7aeed3b8b6ebfbe10b307ff5",
+    "newPassword":"Kartikbhatt@652003"
+}

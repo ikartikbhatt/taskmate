@@ -11,6 +11,7 @@ async function signUp(req, res) {
     const { name, email, password, role, designation } = data;
 
     const hashPassword = await encPass(password, "encrypt");
+
     const newUser = new user({
       name,
       email,
