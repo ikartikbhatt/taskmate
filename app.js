@@ -13,6 +13,7 @@ const authFn = require("./middleware/authFn");
 const otpRouter = require("./routes/otp/otpRouter");
 const app = express();
 
+
 // configuring dotenv in main file to use it across all over the project
 dotenv.config();
 logger.log({
@@ -33,6 +34,7 @@ logger.log({
 });
 
 //MIDDLEWARE FOR DATA TRANSFER
+app.use('/public', express.static('public'));
 app.use(express.json());
 app.use(cookie());
 app.use(express.urlencoded({ extended: true }));
@@ -55,7 +57,7 @@ connectToDb()
   .catch((err) => {
     logger.log({
       level: "error",
-      message: `DB Connection Failed`,
+      message: `DB Connection Failed`, 
       error: err.message,
     });
   });

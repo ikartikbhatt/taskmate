@@ -207,3 +207,9 @@ BODY : {
     "resetToken":"b8521a7d698280932eff9685e580b83aa276dacf7aeed3b8b6ebfbe10b307ff5",
     "newPassword":"Kartikbhatt@652003"
 }
+
+//create two api
+
+/list-my-teams == where i am member
+
+/list-free-teams== where i can see teams in which i am not there

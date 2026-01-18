@@ -23,6 +23,6 @@ teamRouter.post("/updateTeam", updateTeamNameValidator, updateTeamName);
 teamRouter.post("/searchTeam",searchTeamValidator,SearchTeam);
 
 // Get admin teams
-teamRouter.get("/adminTeams",listAdminTeam);
+teamRouter.get("/listAdminTeams",listAdminTeam);
 
 module.exports = teamRouter;

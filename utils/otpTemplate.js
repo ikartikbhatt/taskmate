@@ -14,13 +14,15 @@
  * @param {string} [params.userName] - User's name for personalization
  * @returns {string} HTML email template
  */
+
+
 function otpTemplate({
   otp,
   title = "OTP Verification",
   message = "Use the OTP below to complete your verification.",
   companyName = "Task Mate",
   companyLogo = null,
-  supportEmail = "support@devconnect.com",
+  supportEmail = "taskmate2004@gmail.com",
   expiryMinutes = 5,
   primaryColor = "#2563eb",
   userName = null,

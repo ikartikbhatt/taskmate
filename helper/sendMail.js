@@ -12,10 +12,11 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// ship otp
 async function shipOTP(otp, receiver, type) {
   if (type == "email") {
     const info = await transporter.sendMail({
-      from: `"Devconnect" <${process.env.GMAIL_USER}>`,
+      from: `"Task Mate" <${process.env.GMAIL_USER}>`,
       to: receiver,
       subject: "🔒 OTP Verification for Password Reset",
       html: otpTemplate({

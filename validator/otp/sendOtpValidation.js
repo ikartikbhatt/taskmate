@@ -29,7 +29,7 @@ async function sendOtpValidation(req, res, next) {
 
   //   console.log('query >>>',query);
 
-  const findUser = await userModel.findOne({ email });
+  const findUser = await userModel.findOne({ email }); // why email why not query ??
 
   //   console.log('findUser', findUser);
 
