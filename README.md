@@ -1,215 +1,477 @@
-## models
+# TaskMate
 
-## user Model
+A robust RESTful API for team collaboration and management, built with Node.js and Express.js. TaskMate enables users to create, join, and manage teams securely, with features like user authentication, OTP verification, and comprehensive team operations.
 
-id(mongo id by default)
-email(unique)
-username,
-password,
-role (enum : admin and user),
+## Features
 
-################################################################################################################################
+- **User Authentication**: Secure signup, login, logout, and password reset functionalities.
+- **OTP Verification**: Send and verify OTP for enhanced security during password resets.
+- **Team Management**: Create, update, delete, search, and join teams with unique keys.
+- **Role-Based Access**: Admin and user roles for team management.
+- **Logging**: Comprehensive logging using Winston for monitoring and debugging.
+- **Email Notifications**: Integrated nodemailer for sending OTP and notifications.
+- **Security**: JWT-based authentication, bcrypt password hashing, and CORS configuration.
+- **Code Quality**: ESLint and Prettier for consistent code formatting and linting.
 
-## API DOCUMENTATION
+## Tech Stack
 
-## Base Url : "http://localhost"
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB with Mongoose ODM
+- **Authentication**: JSON Web Tokens (JWT), bcrypt
+- **Email**: Nodemailer
+- **Logging**: Winston
+- **Validation**: Custom validators
+- **Development Tools**: ESLint, Prettier, Husky, Nodemon
 
-## Authentication Api
+## Prerequisites
 
-## signup
+Before running this application, ensure you have the following installed:
 
-api name : baseurl/auth/signup,
-method : POST
-request Body : {email,password}
-response body : {
-status : success,
-message : 'user created successfully <username>  
- data : <data>
-};
+- Node.js (v14 or higher)
+- MongoDB (local or cloud instance, e.g., MongoDB Atlas)
+- npm or yarn package manager
 
-## login
+## Installation
 
-api name : baseurl/auth/login,
-method : POST
-request Body : {email,password}
-response body : {
-status : success,
-message : 'user logged in successfully <username>  
- data : <data>
-};
+1. Clone the repository:
 
-## logout
+   ```bash
+   git clone https://github.com/iamshubhamratra/taskmate.git
+   cd taskmate
+   ```
 
-api name : baseurl/auth/logout,
-method : POST
-response body : {
-status : success,
-message : 'user logged out successfully <username>  
- };
+2. Install dependencies:
 
-## User Api
+   ```bash
+   npm install
+   ```
 
-## get user profile
+3. Set up environment variables (see Environment Variables section below).
 
-api name : baseurl/user/get-user-profile,
-method : GET
-response body : {
-status : success,
-message : 'user profile fetched successfully <username>  
- data : <data>
-};
+4. Ensure MongoDB is running on your system or update the connection string accordingly.
 
-## reset password
+## Environment Variables
 
-api name : baseurl/user/reset-password,
-method : PUT
-request Body : {oldpassword,newpassword}
-response body : {
-status : success,
-message : 'user password changed successfully <username>  
- data : <data>
-};
+Create a `.env` file in the root directory and configure the following variables:
 
-## forget password
+```env
+# Server Configuration
+SERVERPORT=8080
+ORIGIN_URL=http://localhost:8080
+CLIENT_URL=http://localhost:3000  # Frontend URL for CORS
 
-## Otp Api
+# Database
+MONGODB_URI=mongodb://localhost:27017/taskmate  # Or your MongoDB Atlas URI
 
-## send-otp
+# JWT
+JWT_SECRET=your_jwt_secret_key_here #will add it later
 
-## verify otp
+# Email Configuration (for nodemailer)
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_password
 
-## TEAM API -- the one person make team is declared as an --> admin
+# Other
+NODE_ENV=development
+```
 
-## TEAM -- frontend -- team-name , team-description , team-profilePicture
+**Security Note**: Never commit your `.env` file to version control. Add it to `.gitignore`.
 
-## THIS WEEK
+## Running the Application
 
-/list-all-team -- GET -- show list of all available teams where user is not a member or even admin
+### Development Mode
 
-response:{
-teamName,
-teamDescription,
-teamPhoto,
-adminName,
-TotalNumber of members in team(inc admin)
+Run the application with automatic restarts on file changes:
+
+```bash
+npm run dev
+```
+
+### Production Mode
+
+Build and start the application:
+
+```bash
+npm start
+```
+
+The server will start on the port specified in `SERVERPORT` (default: 8080). You can access the API at `http://localhost:8080/taskmate`.
+
+### Additional Scripts
+
+- `npm run lint`: Lint and fix code with ESLint.
+- `npm run format`: Format code with Prettier.
+- `npm run check`: Run both linting and formatting.
+
+## API Documentation
+
+Base URL: `http://localhost:8080/taskmate`
+
+All responses follow this structure:
+
+```json
+{
+  "status": "success" | "error",
+  "message": "Description of the response",
+  "data": {}  // Optional data object
 }
+```
 
-/createTeam -- here we need to create a unique team key
+### Authentication Endpoints
 
-request : {
-teamName:"", [mandatory]
-teamDescription:"", [non-mandatory]
-teamPhoto:"", [non-mandatory]
-}
+#### Signup
 
-response : {
-teamName,
-teamKey
-}
+- **Endpoint**: `POST /taskmate/auth/signup`
+- **Body**:
+  ```json
+  {
+    "email": "user@example.com",
+    "password": "securepassword"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "User created successfully <username>",
+    "data": {
+      /* user data */
+    }
+  }
+  ```
 
-/deleteTeam -- need to remove full document
+#### Login
 
-request:{
-teamName:" "[mandatory]
-}
+- **Endpoint**: `POST /taskmate/auth/login`
+- **Body**:
+  ```json
+  {
+    "email": "user@example.com",
+    "password": "securepassword"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "User logged in successfully <username>",
+    "data": {
+      /* user data with token */
+    }
+  }
+  ```
 
-response :{message : team deleted successfully}
+#### Logout
 
-/updateTeam -- need to keep team key same
+- **Endpoint**: `POST /taskmate/auth/logout`
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "User logged out successfully <username>"
+  }
+  ```
 
-request:{
-teamName:"", [mandatory]
-teamDescription:"", [non-mandatory]
-teamPhoto:"", [non-mandatory]
-}
+#### Reset Password
 
-response : {
-teamName,
-teamKey
-}
+- **Endpoint**: `PUT /taskmate/auth/reset-password`
+- **Body**:
+  ```json
+  {
+    "oldPassword": "oldpassword",
+    "newPassword": "newpassword"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "Password changed successfully <username>",
+    "data": {
+      /* updated user data */
+    }
+  }
+  ```
 
-/search-team -- POST
+#### Set New Password (Forget Password)
 
-request:{
-teamKey
-}
+- **Endpoint**: `PATCH /taskmate/auth/set-new-password`
+- **Body**:
+  ```json
+  {
+    "resetToken": "token_from_email",
+    "newPassword": "newpassword"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "Password reset successfully"
+  }
+  ```
 
-response:{
-teamName,
-teamDescription,
-teamPhoto,
-adminName,
-TotalNumber of members in team(inc admin)
-}
+### OTP Endpoints
 
-##################################################################################################################
+#### Send OTP
 
-NEXT WEEK THING
+- **Endpoint**: `POST /taskmate/otp/send-otp`
+- **Body**:
+  ```json
+  {
+    "email": "user@example.com",
+    "mobile": "1234567890"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "OTP sent successfully"
+  }
+  ```
 
-/join-team
+#### Verify OTP
 
-/leave-team
+- **Endpoint**: `POST /taskmate/otp/verify-otp`
+- **Body**:
+  ```json
+  {
+    "email": "user@example.com",
+    "otp": "123456"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "OTP verified successfully"
+  }
+  ```
 
-/list-my-Team -- (admin specific) -- get -- list all team created by that user --
+### Team Endpoints
 
-response:{
-teamName,
-teamDescription,
-teamPhoto,
-adminName,
-TotalNumber of members in team(inc admin)
-}
+**Note**: All team endpoints require authentication (JWT token in header).
 
-/list-joined-team -- list of all team where admin is a user
-response:{
-teamName,
-teamDescription,
-teamPhoto,
-adminName,
-TotalNumber of members in team(inc admin)
-}
+#### List All Teams (Available to Join)
 
+- **Endpoint**: `GET /taskmate/team/list-all-teams`
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "Teams fetched successfully",
+    "data": [
+      {
+        "teamName": "Team Alpha",
+        "teamDescription": "Description",
+        "teamPhoto": "url",
+        "adminName": "Admin User",
+        "totalMembers": 5
+      }
+    ]
+  }
+  ```
 
+#### Create Team
 
+- **Endpoint**: `POST /taskmate/team/createTeam`
+- **Body**:
+  ```json
+  {
+    "teamName": "New Team",
+    "teamDescription": "Optional description",
+    "teamPhoto": "Optional photo URL"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "Team created successfully",
+    "data": {
+      "teamName": "New Team",
+      "teamKey": "unique-key"
+    }
+  }
+  ```
 
+#### Update Team
 
+- **Endpoint**: `PUT /taskmate/team/updateTeam`
+- **Body**:
+  ```json
+  {
+    "teamName": "Updated Team Name",
+    "teamDescription": "Updated description",
+    "teamPhoto": "Updated photo URL"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "Team updated successfully",
+    "data": {
+      "teamName": "Updated Team Name",
+      "teamKey": "same-unique-key"
+    }
+  }
+  ```
 
+#### Delete Team
 
+- **Endpoint**: `DELETE /taskmate/team/deleteTeam`
+- **Body**:
+  ```json
+  {
+    "teamName": "Team to Delete"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "Team deleted successfully"
+  }
+  ```
 
+#### Search Team
 
-///API 
+- **Endpoint**: `POST /taskmate/team/searchTeam`
+- **Body**:
+  ```json
+  {
+    "teamKey": "unique-team-key"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "Team found",
+    "data": {
+      "teamName": "Team Name",
+      "teamDescription": "Description",
+      "teamPhoto": "url",
+      "adminName": "Admin User",
+      "totalMembers": 5
+    }
+  }
+  ```
 
-service : send otp
+#### Join Team
 
-POST :  http://localhost:8080/taskmate/otp/send-otp
+- **Endpoint**: `POST /taskmate/team/join-team`
+- **Body**:
+  ```json
+  {
+    "teamKey": "unique-team-key"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "Joined team successfully"
+  }
+  ```
 
-BODY : {
-    "email":"kartikworksss@gmail.com",
-    "mobile":"9310605985"
-}
+#### Leave Team
 
+- **Endpoint**: `POST /taskmate/team/leave-team`
+- **Body**:
+  ```json
+  {
+    "teamName": "Team Name"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "Left team successfully"
+  }
+  ```
 
-service : verify otp
+#### List My Teams (Admin)
 
-POST :  http://localhost:8080/taskmate/otp/verify-otp
+- **Endpoint**: `GET /taskmate/team/list-my-teams`
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "My teams fetched successfully",
+    "data": [
+      {
+        "teamName": "My Team",
+        "teamDescription": "Description",
+        "teamPhoto": "url",
+        "adminName": "Your Name",
+        "totalMembers": 3
+      }
+    ]
+  }
+  ```
 
-BODY : {
-    "email":"kartikworksss@gmail.com",
-    "otp":"670152"
-}
+#### List Joined Teams
 
+- **Endpoint**: `GET /taskmate/team/list-joined-teams`
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "Joined teams fetched successfully",
+    "data": [
+      /* similar to above */
+    ]
+  }
+  ```
 
-service : forget password
+## Models
 
-PATCH : http://localhost:8080/taskmate/auth/set-new-password
+### User Model
 
-BODY : {
-    "resetToken":"b8521a7d698280932eff9685e580b83aa276dacf7aeed3b8b6ebfbe10b307ff5",
-    "newPassword":"Kartikbhatt@652003"
-}
+- `id`: MongoDB ObjectId (auto-generated)
+- `email`: String, unique
+- `username`: String
+- `password`: String (hashed)
+- `role`: Enum ('admin', 'user')
 
-//create two api
+### Team Model
 
-/list-my-teams == where i am member
+- `id`: MongoDB ObjectId (auto-generated)
+- `teamName`: String
+- `teamDescription`: String (optional)
+- `teamPhoto`: String (optional)
+- `teamKey`: String (unique)
+- `admin`: User ObjectId
+- `members`: Array of User ObjectIds
 
-/list-free-teams== where i can see teams in which i am not there
+### OTP Model
+
+- `id`: MongoDB ObjectId (auto-generated)
+- `email`: String
+- `otp`: String
+- `expiresAt`: Date
+
+## Contributing
+
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feature/your-feature-name`
+3. Commit your changes: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/your-feature-name`
+5. Open a pull request.
+
+Please ensure your code follows the project's linting and formatting standards by running `npm run check` before submitting.
+
+## License
+
+This project is licensed under the ISC License. See the [LICENSE](LICENSE) file for details.
+
+## Author
+
+Developed by [Shubham Ratra](https://github.com/iamshubhamratra)
+&  
+Developed by [Kartik Bhatt ](https://github.com/ikartikbhatt)

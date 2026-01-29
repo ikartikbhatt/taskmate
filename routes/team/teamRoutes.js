@@ -20,9 +20,9 @@ teamRouter.post("/deleteTeam", deleteTeamValidator, deleteTeam);
 teamRouter.post("/updateTeam", updateTeamNameValidator, updateTeamName);
 
 // search team
-teamRouter.post("/searchTeam",searchTeamValidator,SearchTeam);
+teamRouter.post("/searchTeam", searchTeamValidator, SearchTeam);
 
 // Get admin teams
-teamRouter.get("/listAdminTeams",listAdminTeam);
+teamRouter.get("/listAdminTeams", listAdminTeam);
 
 module.exports = teamRouter;

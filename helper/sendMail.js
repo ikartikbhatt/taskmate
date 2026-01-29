@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 const otpTemplate = require("../utils/otpTemplate");
+const loginAlertTemplate = require("../utils/loginOtpTemplate");
 const logger = require("./logger");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -39,5 +40,25 @@ async function shipOTP(otp, receiver, type) {
     });
   }
 }
+async function loginMail({ receiver, userName, ip, device }) {
+  const info = await transporter.sendMail({
+    from: `"Task Mate" <${process.env.GMAIL_USER}>`,
+    to: receiver,
+    subject: "🔔 New Login Alert",
+    html: loginAlertTemplate({
+      dateTime: new Date().toLocaleString(),
+      userName,
+      ip,
+      location: "Unknown Location",
+      device,
+      secureAccountUrl: "http://localhost:8080/taskmate/auth/resetpass",
+    }),
+  });
+  logger.log({
+    level: "info",
+    message: "OTP on mail sent Successfully",
+    messageId: info.messageId,
+  });
+}
 
-module.exports = shipOTP;
+module.exports = { shipOTP, loginMail };

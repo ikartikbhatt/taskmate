@@ -57,7 +57,7 @@ async function sendOTP(req, res) {
     });
     return res
       .status(500)
-      .json(await sendResponse(res,500,"failure", "Failed to send OTP"));
+      .json(await sendResponse(res, 500, "failure", "Failed to send OTP"));
   }
 }
 

@@ -15,7 +15,6 @@
  * @returns {string} HTML email template
  */
 
-
 function otpTemplate({
   otp,
   title = "OTP Verification",
