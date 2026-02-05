@@ -6,10 +6,10 @@ const logger = require("../../helper/logger");
 async function SearchTeam(req, res) {
   try {
     const teamKey = req.SearchTeam;
-    console.log(teamKey);
+    // console.log(teamKey);
 
     const listTeam = await teamModel.findOne(teamKey);
-    console.log(listTeam);
+    // console.log(listTeam);
 
     const data = {
       adminId: listTeam?.adminUserId,

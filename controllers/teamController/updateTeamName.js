@@ -15,7 +15,7 @@ async function updateTeamName(req, res) {
     team.teamName = data.newteamname;
 
     await team.save();
-    console.log(team);
+    // console.log(team);
 
     const newteam = {
       teamName: team?.teamName,
@@ -25,7 +25,7 @@ async function updateTeamName(req, res) {
       role: team?.role,
       updatedAt: team?.updatedAt,
     };
-    console.log(newteam);
+    // console.log(newteam);
 
     return sendResponse(res, 200, "success", "team name updated", newteam);
   } catch (err) {

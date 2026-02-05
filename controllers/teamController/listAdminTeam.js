@@ -7,7 +7,7 @@ async function listAdminTeam(req, res) {
   try {
     const userId = req.userId;
 
-    console.log(userId);
+    // console.log(userId);
 
     const teams = await teamModel
       .find({ adminUserId: userId, role: "admin" })
