@@ -9,12 +9,12 @@ const emailFormat = new RegExp(config.regex.emailRegex);
 // password
 const passwordFormat = new RegExp(config.regex.passRegex);
 
-// signup
-async function signupValidator(req, res, next) {
+// login
+async function loginValidator(req, res, next) {
   try {
-    const { name, email, password, role, designation } = req.body;
+    const { email, password } = req.body;
 
-    if (!name || !email || !password) {
+    if (!email || !password) {
       return sendResponse(res, 400, "failure", "provide proper input");
     }
 
@@ -45,32 +45,25 @@ async function signupValidator(req, res, next) {
       );
     }
 
-    // check for duplicate entry
-    const existingUser = await userModel.findOne({ email });
-    if (existingUser) {
-      return sendResponse(
-        res,
-        400,
-        "failure",
-        "user already present kindly proceed for login"
-      );
+    //regex email , password
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      return sendResponse(res, 400, "failure", "user does not exist");
     }
 
-    req.userData = { name, email, password, role, designation };
+    req.userdata = { email, password };
     logger.log({
       level: "info",
       message: "user SignupValidator passed >>>",
-      // data: req.userData,
     });
   } catch (err) {
     logger.log({
       level: "info",
-      message: "error in signupvalidator >>>>>",
+      message: "error in loginvalidator >>>>>",
       error: err.message,
     });
   }
-
   next();
 }
 
-module.exports = signupValidator;
+module.exports = loginValidator;
