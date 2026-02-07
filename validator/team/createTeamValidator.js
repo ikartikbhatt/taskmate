@@ -8,29 +8,29 @@ const teamModel = require("../../models/teamModel");
 async function createTeamValidator(req, res, next) {
   try {
     const userId = req.userId;
-    const { teamname, teamdescription } = req.body;
-    if (!teamname)
+    const { teamName, teamDescription } = req.body;
+    if (!teamName)
       return sendResponse(res, 400, "failure", "kindly send proper fields");
-    if (teamdescription.length < 8 || teamdescription.length > 200) {
+    if (teamDescription.length < 8 || teamDescription.length > 200) {
       return sendResponse(
         res,
         400,
         "failure",
-        "teamdescription length must be between 8 to 200 characters"
+        "teamDescription length must be between 8 to 200 characters"
       );
     }
 
-    if (teamname.length < 4 || teamname.length > 25) {
+    if (teamName.length < 4 || teamName.length > 25) {
       return sendResponse(
         res,
         400,
         "failure",
-        "teamname length must be between 4 to 25 characters"
+        "teamName length must be between 4 to 25 characters"
       );
     }
     const teamRegex = new RegExp(config.regex.teamNameRegex);
 
-    if (!teamRegex.test(teamname))
+    if (!teamRegex.test(teamName))
       return sendResponse(
         res,
         400,
@@ -44,14 +44,14 @@ async function createTeamValidator(req, res, next) {
     //check for duplicate team -- admin cannot create team with same name again
     const checkForDuplicateTeam = await teamModel.findOne({
       adminUserId: userId,
-      teamName: teamname,
+      teamName: teamName,
     });
 
     if (checkForDuplicateTeam)
       return sendResponse(res, 400, "failure", "Team Already found");
 
     //attach the filtered request to request handler
-    req.createTeam = { teamname, teamdescription, teamKey };
+    req.createTeam = { teamName, teamDescription, teamKey };
   } catch (err) {
     logger.log({
       level: "info",

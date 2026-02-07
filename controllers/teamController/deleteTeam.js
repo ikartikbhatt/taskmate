@@ -5,9 +5,9 @@ const logger = require("../../helper/logger");
 // delete team
 async function deleteTeam(req, res) {
   try {
-    const data = req.deleteTeam;
+    const {teamKey} = req.deleteTeam;
 
-    await teamModel.findOneAndDelete(data);
+    await teamModel.findOneAndDelete({teamKey});
     return sendResponse(res, 200, "success", "team deleted successfully");
   } catch (err) {
     logger.log({

@@ -6,14 +6,14 @@ const logger = require("../../helper/logger");
 // create team
 async function createTeam(req, res) {
   try {
-    const { teamname, teamdescription, teamKey } = req.createTeam;
+    const { teamName, teamDescription, teamKey } = req.createTeam;
     const userId = req.userId;
 
     const getUserName = await userModel.findById(userId);
     const createTeam = await teamModel.create({
       adminUserId: userId,
-      teamName: teamname,
-      teamDescription: teamdescription || null,
+      teamName: teamName,
+      teamDescription: teamDescription || null,
       teamKey: teamKey,
       role: "admin",
     });

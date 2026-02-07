@@ -17,7 +17,7 @@ teamRouter.post("/createTeam", createTeamValidator, createTeam);
 teamRouter.post("/deleteTeam", deleteTeamValidator, deleteTeam);
 
 // update team name
-teamRouter.post("/updateTeam", updateTeamNameValidator, updateTeamName);
+teamRouter.patch("/updateTeam", updateTeamNameValidator, updateTeamName);
 
 // search team
 teamRouter.post("/searchTeam", searchTeamValidator, SearchTeam);

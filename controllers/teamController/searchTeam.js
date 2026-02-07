@@ -5,10 +5,10 @@ const logger = require("../../helper/logger");
 // search team
 async function SearchTeam(req, res) {
   try {
-    const teamKey = req.SearchTeam;
+    const teamKey = req.searchTeam;
     // console.log(teamKey);
 
-    const listTeam = await teamModel.findOne(teamKey);
+    const listTeam = await teamModel.findOne({teamKey});
     // console.log(listTeam);
 
     const data = {

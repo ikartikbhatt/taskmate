@@ -5,20 +5,24 @@ const logger = require("../../helper/logger");
 // delete team validator
 async function deleteTeamValidator(req, res, next) {
   try {
-    // const teamkey = req.body?.teamkey;
     const userId = req.userId;
-    const teamname = req.body?.teamname;
-    if (!teamname) {
+    const teamKey = req.body?.teamKey;
+    // const teamname = req.body?.teamName;
+    if (!teamKey) {
       return sendResponse(res, 400, "failure", "provide proper inputs");
     }
 
     const team = await teamModel.findOne({
-      teamName: teamname,
+      teamKey: teamKey,
       adminUserId: userId,
     });
     if (!team) return sendResponse(res, 400, "failure", "team not found");
 
-    req.deleteTeam = { teamName: teamname, teamKey: team.teamKey };
+    req.deleteTeam = { teamKey: team.teamKey };
+    console.log("BODY:", req.body);
+
+    next();
+
   } catch (err) {
     logger.log({
       level: "info",
@@ -27,7 +31,6 @@ async function deleteTeamValidator(req, res, next) {
     });
   }
 
-  next();
 }
 
 module.exports = deleteTeamValidator;

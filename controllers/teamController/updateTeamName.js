@@ -6,15 +6,17 @@ const logger = require("../../helper/logger");
 async function updateTeamName(req, res) {
   try {
     const userId = req.userId;
-    const data = req.updateTeam;
+    const { team, newTeamName, newTeamDescription } = req.updateTeam;
 
-    const team = await teamModel.findOne({
-      teamName: data.teamName,
-      adminUserId: userId,
-    });
-    team.teamName = data.newteamname;
+    if (newTeamName) {
+      team.teamName = newTeamName;
+    }
 
-    await team.save();
+     if (newTeamDescription !== undefined) {
+      team.teamDescription = newTeamDescription;
+    }
+      await team.save();
+
     // console.log(team);
 
     const newteam = {

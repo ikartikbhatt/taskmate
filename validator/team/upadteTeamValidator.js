@@ -3,68 +3,92 @@ const sendResponse = require("../../helper/sendResponse");
 const logger = require("../../helper/logger");
 const config = require("../../config/config.json");
 
+// team name regex
+const teamRegex = new RegExp(config.regex.teamNameRegex);
+
 // update team name validator
 async function updateTeamNameValidator(req, res, next) {
   try {
-    // const teamkey = req.body?.teamkey;
     const userId = req.userId;
-    const teamname = req.body?.teamname;
-    const newteamname = req.body?.newteamname;
-    if (!teamname || !newteamname) {
+    const teamKey = req.body?.teamKey;
+    const newTeamDescription = req.body?.newTeamDescription;
+    const newTeamName = req.body?.newTeamName;
+
+    if (!userId) {
+      return sendResponse(res, 401, "failure", "unauthorized");
+    }
+
+    if (!teamKey) {
+      return sendResponse(res, 400, "failure", "teamKey is required");
+    }
+
+    // find team
+    const team = await teamModel.findOne({
+      teamKey,
+      adminUserId: userId,
+    });
+
+    if (!team) {
+      return sendResponse(res, 404, "failure", "team not found");
+    }
+
+
+    if (!newTeamName && !teamDescription) {
       return sendResponse(res, 400, "failure", "provide proper inputs");
     }
-
-    if (newteamname.length < 4 || newteamname.length > 25) {
-      return sendResponse(
-        res,
-        400,
-        "failure",
-        "teamname length must be between 4 to 25 characters"
-      );
+    if (newTeamName) {
+      if (newTeamName.length < 4 || newTeamName.length > 25) {
+        return sendResponse(
+          res,
+          400,
+          "failure",
+          "teamname length must be between 4 to 25 characters"
+        );
+      }
     }
-    const teamRegex = new RegExp(config.regex.teamNameRegex);
 
-    if (!teamRegex.test(newteamname))
+    if (!teamRegex.test(newTeamName)) {
       return sendResponse(
         res,
         400,
         "failure",
         "Only _ and - are allowed as special characters"
       );
+    }
 
-    if (teamname === newteamname)
+    if (newTeamName == team.teamName) {
       return sendResponse(
         res,
         400,
         "failure",
-        "old name and new name can not be same"
+        "old name and new name cannot be same"
       );
+    }
 
-    const team = await teamModel.findOne({
-      teamName: teamname,
+    const duplicate = await teamModel.findOne({
       adminUserId: userId,
-    });
-    if (!team) return sendResponse(res, 400, "failure", "team not found");
-    // console.log(team);
-
-    const checkForDuplicateTeam = await teamModel.findOne({
-      adminUserId: userId,
-      teamName: newteamname,
+      teamName: newTeamName,
+      teamKey: { $ne: teamKey },
     });
 
-    if (checkForDuplicateTeam)
+    if (duplicate) {
       return sendResponse(
         res,
         400,
         "failure",
-        "found team with same name please use another team name"
+        "team with same name already exists"
       );
+    }
 
     req.updateTeam = {
-      teamName: teamname,
-      newteamname: newteamname,
-      teamKey: team.teamKey,
+      team,
+      newTeamName,
+      newTeamDescription,
     };
+    console.log("BODY FROM FRONTEND:", req.body);
+
+    next();
+
   } catch (err) {
     logger.log({
       level: "info",
@@ -73,7 +97,6 @@ async function updateTeamNameValidator(req, res, next) {
     });
   }
 
-  next();
 }
 
 module.exports = updateTeamNameValidator;
