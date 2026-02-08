@@ -59,18 +59,20 @@ async function signupValidator(req, res, next) {
     req.userData = { name, email, password, role, designation };
     logger.log({
       level: "info",
-      message: "user SignupValidator passed >>>",
-      // data: req.userData,
+      message: "user signupValidator passed >>>",
     });
+    
+    next();
+    
   } catch (err) {
     logger.log({
-      level: "info",
+      level: "error", 
       message: "error in signupvalidator >>>>>",
       error: err.message,
     });
+    
+    return sendResponse(res, 500, "failure", "Internal server error");
   }
-
-  next();
 }
 
 module.exports = signupValidator;
