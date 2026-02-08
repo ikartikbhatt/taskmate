@@ -53,7 +53,7 @@ logger.log({
 const PORT = process.env.PORT || process.env.SERVERPORT || 8080;
 connectToDb()
   .then(() => {
-    app.listen(process.env.SERVERPORT, () => {
+    app.listen(PORT, () => {
       serverListenMessage();
       logger.log({
         level: "info",
