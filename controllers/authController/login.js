@@ -39,10 +39,9 @@ async function login(req, res) {
 
       // Collect login info
       const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-      // const ip = req.headers["host"];
       const device = req.headers["user-agent"];
 
-      // send login alert mail
+      // send login alert mail 
       sendMail.loginMail({
         receiver: getUser.email,
         userName: getUser.name,
@@ -50,10 +49,12 @@ async function login(req, res) {
         device,
       })
         .catch(err => {
-          console.error("Login mail failed:", err.message);
+          logger.log({
+            level: "error",
+            message: "Login mail failed:",
+            error: err.message
+          });
         });
-
-
 
       return sendResponse(res, 200, "success", "user logged in successfully", {
         success: true,
@@ -67,10 +68,12 @@ async function login(req, res) {
     }
   } catch (err) {
     logger.log({
-      level: "info",
+      level: "error", 
       message: "error in loginController >>>>>",
       error: err.message,
     });
+    
+    return sendResponse(res, 500, "failure", "Internal server error");
   }
 }
 

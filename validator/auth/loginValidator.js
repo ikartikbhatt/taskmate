@@ -53,17 +53,19 @@ async function loginValidator(req, res, next) {
     req.userdata = { email, password };
     logger.log({
       level: "info",
-      message: "user SignupValidator passed >>>",
+      message: "user loginValidator passed >>>",
     });
     
     next();
 
   } catch (err) {
     logger.log({
-      level: "info",
+      level: "error",
       message: "error in loginvalidator >>>>>",
       error: err.message,
     });
+    
+    return sendResponse(res, 500, "failure", "Internal server error");
   }
 }
 

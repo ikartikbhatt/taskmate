@@ -22,9 +22,16 @@ async function signUp(req, res) {
     });
     await newUser.save();
 
-    await SignUpMail.SignUPMail({
+    // Send signup email 
+    SignUpMail.SignUPMail({
       receiver: newUser.email,
       userName: newUser.name,
+    }).catch(err => {
+      logger.log({
+        level: "error",
+        message: "Signup mail failed:",
+        error: err.message
+      });
     });
 
     return sendResponse(
@@ -32,14 +39,21 @@ async function signUp(req, res) {
       200,
       "success",
       "user signed up successfully",
-      data
+      {
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+        designation: newUser.designation
+      }
     );
   } catch (err) {
     logger.log({
-      level: "info",
+      level: "error", 
       message: "error in signupController >>>>>",
       error: err.message,
     });
+    
+    return sendResponse(res, 500, "failure", "Internal server error");
   }
 }
 
