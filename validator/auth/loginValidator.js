@@ -55,6 +55,9 @@ async function loginValidator(req, res, next) {
       level: "info",
       message: "user SignupValidator passed >>>",
     });
+    
+    next();
+
   } catch (err) {
     logger.log({
       level: "info",
@@ -62,7 +65,6 @@ async function loginValidator(req, res, next) {
       error: err.message,
     });
   }
-  next();
 }
 
 module.exports = loginValidator;

@@ -44,11 +44,16 @@ async function login(req, res) {
 
       // send login alert mail
       sendMail.loginMail({
-        receiver: getUser.email,
-        userName: getUser.name,
-        ip,
-        device,
-      });
+          receiver: getUser.email,
+          userName: getUser.name,
+          ip,
+          device,
+        })
+        .catch(err => {
+          console.error("Login mail failed:", err.message);
+        });
+
+
 
       return sendResponse(res, 200, "success", "user logged in successfully", {
         success: true,

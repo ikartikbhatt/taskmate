@@ -12,7 +12,11 @@ const transporter = nodemailer.createTransport({
     user: process.env.GMAIL_USER?.trim(),
     pass: process.env.GMAIL_PASS?.trim(),
   },
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 10000,
 });
+
 
 // ship otp
 async function shipOTP({ otp, receiver, type }) {
@@ -53,7 +57,7 @@ async function loginMail({ receiver, userName, ip, device }) {
       ip,
       location: "Unknown Location",
       device,
-      secureAccountUrl: "http://localhost:8080/taskmate/auth/resetpass",
+      // secureAccountUrl: "http://localhost:8080/taskmate/auth/resetpass",
     }),
   });
   logger.log({
