@@ -9,7 +9,7 @@ const sendMail = require("../../helper/sendMail");
 async function login(req, res) {
   try {
     const { email, password } = req.userdata;
-    //fetch user stored password from database
+
     const getUser = await userModel.findOne({ email });
     if (!getUser) {
       return sendResponse(res, 400, "failure", "wrong email or password");
@@ -24,11 +24,18 @@ async function login(req, res) {
       const jwtToken = jwt.sign(
         { id: getUser._id?.toString() },
         process.env.SECRET_KEY,
-        { expiresIn: "1h" }
+        { expiresIn: '7d' }
       );
 
       //send cookies
-      res.cookie("taskmate", jwtToken, { httpOnly: true, secure: true, sameSite: "none" });
+      res.cookie("taskmate", jwtToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        path: "/",
+      });
+
 
       // Collect login info
       const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
@@ -44,10 +51,13 @@ async function login(req, res) {
       });
 
       return sendResponse(res, 200, "success", "user logged in successfully", {
-        email: getUser.email,
-        name: getUser.name,
-        role: getUser.role,
-        Bio: getUser.Bio,
+        success: true,
+        user: {
+          email: getUser.email,
+          name: getUser.name,
+          role: getUser.role,
+          Bio: getUser.bio,
+        },
       });
     }
   } catch (err) {

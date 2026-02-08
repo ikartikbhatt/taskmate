@@ -45,7 +45,6 @@ async function loginValidator(req, res, next) {
       );
     }
 
-    //regex email , password
     const user = await userModel.findOne({ email });
     if (!user) {
       return sendResponse(res, 400, "failure", "user does not exist");
