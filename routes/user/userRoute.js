@@ -6,9 +6,9 @@ const getUserProfileController=require("../../controllers/userController/getUser
 
 
 // update user profile
-router.patch("/updateProfile",updateProfileValidator,updateProfileController);
+userRouter.patch("/updateProfile",updateProfileValidator,updateProfileController);
 
 // get user profile
-router.get("/profile",getUserProfileController);
+userRouter.get("/profile",getUserProfileController);
 
 module.exports = userRouter;
