@@ -1,44 +1,23 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 const otpTemplate = require("../utils/otpTemplate");
 const loginAlertTemplate = require("../utils/loginOtpTemplate");
 const SignUpTemplate = require("../utils/SignUPTemplate");
 const logger = require("./logger");
 const dotenv = require("dotenv");
+
 dotenv.config();
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.GMAIL_USER?.trim(),
-    pass: process.env.GMAIL_PASS?.trim(),
-  },
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
-  socketTimeout: 10000,
-});
+// ✅ Resend client
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-// ✅ FIXED: Verify connection on startup (optional but helpful)
-transporter.verify(function (error, success) {
-  if (error) {
-    logger.log({
-      level: "error",
-      message: "⚠️ Email transporter connection failed (SMTP may be blocked on Render)",
-      error: error.message,
-    });
-  } else {
-    logger.log({
-      level: "info",
-      message: "✅ Email server is ready to send messages",
-    });
-  }
-});
-
-// ✅ FIXED: Added proper error handling
+// --------------------------------------------------
+// ship OTP (BLOCKING – must succeed)
+// --------------------------------------------------
 async function shipOTP({ otp, receiver, type }) {
   try {
-    if (type == "email") {
-      const info = await transporter.sendMail({
-        from: `"Task Mate" <${process.env.GMAIL_USER}>`,
+    if (type === "email") {
+      const info = await resend.emails.send({
+        from: "Task Mate <onboarding@resend.dev>",
         to: receiver,
         subject: "🔒 OTP Verification for Password Reset",
         html: otpTemplate({
@@ -52,12 +31,13 @@ async function shipOTP({ otp, receiver, type }) {
       logger.log({
         level: "info",
         message: "✅ OTP email sent successfully",
-        messageId: info.messageId,
+        messageId: info?.id,
       });
-      
-      return true; // ✅ Return success
-      
-    } else if (type == "mobile") {
+
+      return true;
+    }
+
+    if (type === "mobile") {
       logger.log({
         level: "info",
         message: "📱 OTP on mobile service under construction",
@@ -65,21 +45,22 @@ async function shipOTP({ otp, receiver, type }) {
       return false;
     }
   } catch (error) {
-    // ✅ CRITICAL: Log but don't crash
     logger.log({
       level: "error",
-      message: "❌ Failed to send OTP email (SMTP may be blocked)",
+      message: "❌ Failed to send OTP email",
       error: error.message,
     });
-    throw error; // Re-throw for OTP flow (OTP must be sent)
+    throw error; // OTP MUST fail if email not sent
   }
 }
 
-// ✅ FIXED: Added proper error handling (non-blocking)
+// --------------------------------------------------
+// login alert (NON-BLOCKING)
+// --------------------------------------------------
 async function loginMail({ receiver, userName, ip, device }) {
   try {
-    const info = await transporter.sendMail({
-      from: `"Task Mate" <${process.env.GMAIL_USER}>`,
+    const info = await resend.emails.send({
+      from: "Task Mate <onboarding@resend.dev>",
       to: receiver,
       subject: "🔔 New Login Alert",
       html: loginAlertTemplate({
@@ -90,31 +71,31 @@ async function loginMail({ receiver, userName, ip, device }) {
         device,
       }),
     });
-    
+
     logger.log({
       level: "info",
       message: "✅ Login alert email sent successfully",
-      messageId: info.messageId,
+      messageId: info?.id,
     });
-    
+
     return true;
-    
   } catch (error) {
-    // ✅ CRITICAL: Log but DON'T crash (login should succeed even if email fails)
     logger.log({
       level: "error",
-      message: "❌ Failed to send login alert email (SMTP may be blocked)",
+      message: "❌ Failed to send login alert email",
       error: error.message,
     });
-    return false; // ✅ Return false but don't throw
+    return false; // login should NOT fail
   }
 }
 
-// ✅ FIXED: Added proper error handling (non-blocking)
+// --------------------------------------------------
+// signup welcome mail (NON-BLOCKING)
+// --------------------------------------------------
 async function SignUPMail({ receiver, userName }) {
   try {
-    const info = await transporter.sendMail({
-      from: `"Task Mate" <${process.env.GMAIL_USER}>`,
+    const info = await resend.emails.send({
+      from: "Task Mate <onboarding@resend.dev>",
       to: receiver,
       subject: "🎉 Welcome to Task Mate",
       html: SignUpTemplate({
@@ -122,36 +103,22 @@ async function SignUPMail({ receiver, userName }) {
         userName,
       }),
     });
-    
+
     logger.log({
       level: "info",
       message: "✅ Welcome email sent successfully",
-      messageId: info.messageId,
+      messageId: info?.id,
     });
-    
+
     return true;
-    
   } catch (error) {
-    // ✅ CRITICAL: Log but DON'T crash (signup should succeed even if email fails)
     logger.log({
       level: "error",
-      message: "❌ Failed to send welcome email (SMTP may be blocked)",
+      message: "❌ Failed to send welcome email",
       error: error.message,
     });
-    return false; // ✅ Return false but don't throw
+    return false; // signup should NOT fail
   }
 }
 
 module.exports = { shipOTP, loginMail, SignUPMail };
-
-/* 
- * ⚠️ IMPORTANT NOTES:
- * 
- * 1. This version has proper error handling to prevent crashes
- * 2. Gmail SMTP may still be BLOCKED on Render (especially free tier)
- * 3. If emails fail on Render, consider switching to SendGrid/Resend
- * 4. Login/Signup will work even if emails fail
- * 5. OTP emails will throw errors (since OTP must be sent for security)
- * 
- * For production, use sendMail-sendgrid.js instead (see EMAIL-SETUP-GUIDE.md)
- */
