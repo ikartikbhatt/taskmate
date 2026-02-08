@@ -1,8 +1,14 @@
 const express = require("express");
-const router = express.Router();
+const userRouter = express.Router();
 const updateProfileValidator = require("../../validator/user/updateUserValidator");
 const updateProfileController=require("../../controllers/userController/updateUserController")
+const getUserProfileController=require("../../controllers/userController/getUserProfileController")
 
+
+// update user profile
 router.patch("/updateProfile",updateProfileValidator,updateProfileController);
 
-module.exports = router;
+// get user profile
+router.get("/profile",getUserProfileController);
+
+module.exports = userRouter;
