@@ -1,3 +1,4 @@
+require("dotenv").config();
 const axios = require("axios");
 const otpTemplate = require("../utils/otpTemplate");
 const loginAlertTemplate = require("../utils/loginOtpTemplate");
