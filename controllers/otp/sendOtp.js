@@ -36,8 +36,7 @@ async function sendOTP(req, res) {
         res,
         200,
         "Success",
-        `OTP Sent Successfully to ${user.name} on email : ${user.email}`,
-        otp
+        `OTP Sent Successfully to ${user.name} on email : ${user.email}`
       );
     } else if (user.otpType == "mobile") {
       await shipOTP.shipOTP({
