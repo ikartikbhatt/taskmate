@@ -6,79 +6,106 @@ const logger = require("./logger");
 
 const BREVO_URL = "https://api.brevo.com/v3/smtp/email";
 
-const sendBrevoMail = async ({ to, subject, html }) => {
-  try {
-    const res = await axios.post(
-      BREVO_URL,
-      {
-        sender: { email: process.env.BREVO_SENDER.match(/<(.*)>/)[1], name: "Task Mate" },
-        to: [{ email: to }],
-        subject,
-        htmlContent: html,
-      },
-      {
-        headers: {
-          "api-key": process.env.BREVO_API_KEY,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+const SENDER_EMAIL = process.env.BREVO_SENDER_EMAIL;
 
-    return res.data;
-  } catch (err) {
-    logger.log({
-      level: "error",
-      message: "Brevo email failed",
-      error: err.response?.data || err.message,
-    });
-    throw err;
-  }
+if (!SENDER_EMAIL) {
+  throw new Error("❌ BREVO_SENDER_EMAIL is not defined in environment variables");
+}
+
+const headers = {
+  "api-key": process.env.BREVO_API_KEY,
+  "Content-Type": "application/json",
+  accept: "application/json",
 };
 
-// OTP (BLOCKING)
-async function shipOTP({ otp, receiver }) {
-  await sendBrevoMail({
-    to: receiver,
-    subject: "🔒 OTP Verification for Password Reset",
-    html: otpTemplate({
-      otp,
-      title: "OTP Verification",
-      message: "Use the OTP below to reset your password",
-    }),
-  });
-}
-
-// Login alert (NON-BLOCKING)
-async function loginMail({ receiver, userName, ip, device }) {
+// ================= OTP =================
+async function shipOTP({ otp, receiver, type }) {
   try {
-    await sendBrevoMail({
-      to: receiver,
-      subject: "🔔 New Login Alert",
-      html: loginAlertTemplate({
-        dateTime: new Date().toLocaleString(),
-        userName,
-        ip,
-        location: "Unknown",
-        device,
-      }),
+    if (type !== "email") return false;
+
+    await axios.post(
+      BREVO_URL,
+      {
+        sender: {
+          name: "Task Mate",
+          email: SENDER_EMAIL,
+        },
+        to: [{ email: receiver }],
+        subject: "🔒 OTP Verification",
+        htmlContent: otpTemplate({
+          otp,
+          title: "OTP Verification",
+          message: "Use the OTP below to continue:",
+        }),
+      },
+      { headers }
+    );
+
+    logger.info("✅ OTP mail sent", { receiver });
+    return true;
+  } catch (error) {
+    logger.error("❌ Brevo OTP failed", {
+      error: error.response?.data || error.message,
     });
-  } catch {
-    // do NOT crash login
+    throw error;
   }
 }
 
-// Signup mail (NON-BLOCKING)
+// ================= LOGIN ALERT =================
+async function loginMail({ receiver, userName, ip, device }) {
+  try {
+    await axios.post(
+      BREVO_URL,
+      {
+        sender: { name: "Task Mate", email: SENDER_EMAIL },
+        to: [{ email: receiver }],
+        subject: "🔔 New Login Alert",
+        htmlContent: loginAlertTemplate({
+          dateTime: new Date().toLocaleString(),
+          userName,
+          ip,
+          location: "Unknown",
+          device,
+        }),
+      },
+      { headers }
+    );
+
+    logger.info("✅ Login mail sent", { receiver });
+    return true;
+  } catch (error) {
+    logger.error("❌ Login mail failed", {
+      error: error.response?.data || error.message,
+    });
+    return false;
+  }
+}
+
+// ================= SIGNUP =================
 async function SignUPMail({ receiver, userName }) {
   try {
-    await sendBrevoMail({
-      to: receiver,
-      subject: "🎉 Welcome to Task Mate",
-      html: SignUpTemplate({
-        dateTime: new Date().toLocaleString(),
-        userName,
-      }),
+    await axios.post(
+      BREVO_URL,
+      {
+        sender: { name: "Task Mate", email: SENDER_EMAIL },
+        to: [{ email: receiver }],
+        subject: "🎉 Welcome to Task Mate",
+        htmlContent: SignUpTemplate({
+          dateTime: new Date().toLocaleString(),
+          userName,
+        }),
+      },
+      { headers }
+    );
+
+    logger.info("✅ Signup mail sent", { receiver });
+    return true;
+  } catch (error) {
+    logger.error("❌ Signup mail failed", {
+      error: error.response?.data || error.message,
     });
-  } catch {}
+    return false;
+  }
 }
 
 module.exports = { shipOTP, loginMail, SignUPMail };
