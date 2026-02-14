@@ -9,6 +9,10 @@ const updateTeamName = require("../../controllers/teamController/updateTeamName"
 const searchTeamValidator = require("../../validator/team/searchTeamValidator");
 const SearchTeam = require("../../controllers/teamController/searchTeam");
 const listAdminTeam = require("../../controllers/teamController/listAdminTeam");
+const requestjoinTeamValidator=require("../../validator/team/requestJoinTeamValidator");
+const requestJoinTeamController=require("../../controllers/teamController/requestJoinTeam");
+const getPendingRequestsController=require("../../controllers/teamController/getPendingRequests");
+const getPendingRequesValidator=require("../../validator/team/getPendingRequestValidator");
 
 // create team
 teamRouter.post("/createTeam", createTeamValidator, createTeam);
@@ -24,5 +28,11 @@ teamRouter.post("/searchTeam", searchTeamValidator, SearchTeam);
 
 // Get admin teams
 teamRouter.get("/listAdminTeams", listAdminTeam);
+
+// Request join Team
+teamRouter.post("/requestJoinTeam",requestjoinTeamValidator,requestJoinTeamController);
+
+// get pending request
+teamRouter.post("/pendingRequests",getPendingRequesValidator,getPendingRequestsController);
 
 module.exports = teamRouter;

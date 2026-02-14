@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 const teamSchema = new mongoose.Schema(
   {
     adminUserId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
       required: true,
-      trim: true,
     },
     teamName: {
       type: String,
@@ -23,18 +23,26 @@ const teamSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
-    role: {
-      type: String,
-      enum: ["admin", "member"],
-      required: true,
-    },
+    members: [{
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user"
+      },
+      role: {
+        type: String,
+        enum: ["admin", "member"],
+        required: true,
+      },
+      joinedAt: { type: Date, default: Date.now },
+    }],
     pendingRequests: [
       {
-        user: {
+        userId: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "user",
         },
         requestedAt: { type: Date, default: Date.now },
+        message: { type: String, default: "" },
       },
     ],
   },
