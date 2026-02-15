@@ -15,9 +15,7 @@ async function createTeam(req, res) {
       teamName: teamName,
       teamDescription: teamDescription || null,
       teamKey: teamKey,
-      members: [
-        { userId, role: "admin" }
-      ],
+      members: [{ userId, role: "admin" }],
     });
 
     // creating create team data object -->

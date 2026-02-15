@@ -11,7 +11,7 @@ const authRouter = require("./routes/auth/userAuthRoute");
 const teamRouter = require("./routes/team/teamRoutes");
 const authFn = require("./middleware/authFn");
 const otpRouter = require("./routes/otp/otpRouter");
-const userRouter=require("./routes/user/userRoute");
+const userRouter = require("./routes/user/userRoute");
 const app = express();
 
 // configuring dotenv in main file to use it across all over the project
@@ -22,17 +22,16 @@ logger.log({
 });
 
 //Allow all origins (dev mode)
-const origin = [
-  "http://localhost:3000",
-  process.env.CLIENT_URL,
-].filter(Boolean);
+const origin = ["http://localhost:3000", process.env.CLIENT_URL].filter(
+  Boolean
+);
 
 app.use(
   cors({
-    origin: origin ,
+    origin: origin,
     credentials: true,
-     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], 
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
@@ -79,7 +78,7 @@ connectToDb()
 app.use("/taskmate/auth", authRouter);
 
 //USER-ROUTES >>>>>>>>>>>>>>>>>>>>>>>>>>
-app.use("/taskmate/user",authFn,userRouter);
+app.use("/taskmate/user", authFn, userRouter);
 
 //TEAM-ROUTES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 app.use("/taskmate/team", authFn, teamRouter);

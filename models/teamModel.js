@@ -23,18 +23,21 @@ const teamSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
-    members: [{
-      userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "user"
+    members: [
+      {
+        userId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "user",
+        },
+        role: {
+          type: String,
+          enum: ["admin", "member"],
+          default: "member",
+          required: true,
+        },
+        joinedAt: { type: Date, default: Date.now },
       },
-      role: {
-        type: String,
-        enum: ["admin", "member"],
-        required: true,
-      },
-      joinedAt: { type: Date, default: Date.now },
-    }],
+    ],
     pendingRequests: [
       {
         userId: {

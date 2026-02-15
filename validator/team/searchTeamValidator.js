@@ -35,8 +35,6 @@ async function searchTeamValidator(req, res, next) {
     req.searchTeam = teamKey;
 
     next();
-
-
   } catch (err) {
     logger.log({
       level: "info",

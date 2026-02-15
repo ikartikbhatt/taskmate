@@ -32,7 +32,6 @@ async function updateTeamNameValidator(req, res, next) {
       return sendResponse(res, 404, "failure", "team not found");
     }
 
-
     if (!newTeamName && !newTeamDescription) {
       return sendResponse(res, 400, "failure", "provide proper inputs");
     }
@@ -88,7 +87,6 @@ async function updateTeamNameValidator(req, res, next) {
     console.log("BODY FROM FRONTEND:", req.body);
 
     next();
-
   } catch (err) {
     logger.log({
       level: "info",
@@ -96,7 +94,6 @@ async function updateTeamNameValidator(req, res, next) {
       error: err.message,
     });
   }
-
 }
 
 module.exports = updateTeamNameValidator;

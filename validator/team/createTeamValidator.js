@@ -3,6 +3,7 @@ const generateTeamKey = require("../../helper/teamKey");
 const logger = require("../../helper/logger");
 const config = require("../../config/config.json");
 const teamModel = require("../../models/teamModel");
+const userModel = require("../../models/userModel");
 
 // create team validator
 async function createTeamValidator(req, res, next) {
@@ -11,7 +12,7 @@ async function createTeamValidator(req, res, next) {
     const { teamName, teamDescription } = req.body;
     if (!teamName)
       return sendResponse(res, 400, "failure", "kindly send proper fields");
-    
+
     if (teamName.length < 4 || teamName.length > 25) {
       return sendResponse(
         res,
@@ -52,11 +53,22 @@ async function createTeamValidator(req, res, next) {
     if (checkForDuplicateTeam)
       return sendResponse(res, 400, "failure", "Team Already found");
 
+    // only admin can create a team
+    const isAdmin = await userModel.findById(userId).select("role -_id");
+
+    if (isAdmin.role != "admin") {
+      return sendResponse(
+        res,
+        400,
+        "failre",
+        "Admin user can only create team"
+      );
+    }
+
     //attach the filtered request to request handler
     req.createTeam = { teamName, teamDescription, teamKey };
 
     next();
-
   } catch (err) {
     logger.log({
       level: "info",

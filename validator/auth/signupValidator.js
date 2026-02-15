@@ -12,7 +12,7 @@ const passwordFormat = new RegExp(config.regex.passRegex);
 // signup
 async function signupValidator(req, res, next) {
   try {
-    const { name, email, password, role, designation} = req.body;
+    const { name, email, password, role, designation } = req.body;
 
     if (!name || !email || !password) {
       return sendResponse(res, 400, "failure", "provide proper input");
@@ -61,16 +61,15 @@ async function signupValidator(req, res, next) {
       level: "info",
       message: "user signupValidator passed >>>",
     });
-    
+
     next();
-    
   } catch (err) {
     logger.log({
-      level: "error", 
+      level: "error",
       message: "error in signupvalidator >>>>>",
       error: err.message,
     });
-    
+
     return sendResponse(res, 500, "failure", "Internal server error");
   }
 }

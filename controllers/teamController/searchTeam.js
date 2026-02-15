@@ -8,10 +8,10 @@ async function SearchTeam(req, res) {
     const teamKey = req.searchTeam;
     // console.log(teamKey);
 
-    const listTeam = await teamModel.findOne({teamKey});
+    const listTeam = await teamModel.findOne({ teamKey });
 
     // console.log(listlistTeam);
-       if (!listTeam) {
+    if (!listTeam) {
       return sendResponse(res, 404, "failure", "team not found");
     }
 
@@ -19,7 +19,7 @@ async function SearchTeam(req, res) {
       adminId: listTeam?.adminUserId,
       teamName: listTeam?.teamName,
       teamDescription: listTeam?.teamDescription,
-      teamKey:listTeam?.teamKey,
+      teamKey: listTeam?.teamKey,
     };
 
     return sendResponse(res, 200, "success", "team found", team);

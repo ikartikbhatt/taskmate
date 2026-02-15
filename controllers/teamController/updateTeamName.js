@@ -12,10 +12,10 @@ async function updateTeamName(req, res) {
       team.teamName = newTeamName;
     }
 
-     if (newTeamDescription !== undefined) {
+    if (newTeamDescription !== undefined) {
       team.teamDescription = newTeamDescription;
     }
-      await team.save();
+    await team.save();
 
     // console.log(team);
 
@@ -30,7 +30,6 @@ async function updateTeamName(req, res) {
     // console.log(newteam);
 
     return sendResponse(res, 200, "success", "team name updated", newteam);
-    
   } catch (err) {
     logger.log({
       level: "info",

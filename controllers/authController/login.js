@@ -24,7 +24,7 @@ async function login(req, res) {
       const jwtToken = jwt.sign(
         { id: getUser._id?.toString() },
         process.env.SECRET_KEY,
-        { expiresIn: '7d' }
+        { expiresIn: "7d" }
       );
 
       //send cookies
@@ -36,23 +36,23 @@ async function login(req, res) {
         path: "/",
       });
 
-
       // Collect login info
       const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
       const device = req.headers["user-agent"];
 
-      // send login alert mail 
-      sendMail.loginMail({
-        receiver: getUser.email,
-        userName: getUser.name,
-        ip,
-        device,
-      })
-        .catch(err => {
+      // send login alert mail
+      sendMail
+        .loginMail({
+          receiver: getUser.email,
+          userName: getUser.name,
+          ip,
+          device,
+        })
+        .catch((err) => {
           logger.log({
             level: "error",
             message: "Login mail failed:",
-            error: err.message
+            error: err.message,
           });
         });
 
@@ -68,11 +68,11 @@ async function login(req, res) {
     }
   } catch (err) {
     logger.log({
-      level: "error", 
+      level: "error",
       message: "error in loginController >>>>>",
       error: err.message,
     });
-    
+
     return sendResponse(res, 500, "failure", "Internal server error");
   }
 }

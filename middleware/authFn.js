@@ -3,7 +3,6 @@ const sendResponse = require("../helper/sendResponse");
 
 function authFn(req, res, next) {
   const userCookie = req.cookies?.taskmate;
-
   if (!userCookie) {
     return sendResponse(res, 401, "failure", "unauthorized");
   }
@@ -16,6 +15,5 @@ function authFn(req, res, next) {
     return sendResponse(res, 401, "failure", "invalid token");
   }
 }
-
 
 module.exports = authFn;

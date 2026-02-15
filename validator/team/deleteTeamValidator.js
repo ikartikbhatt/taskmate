@@ -22,7 +22,6 @@ async function deleteTeamValidator(req, res, next) {
     console.log("BODY:", req.body);
 
     next();
-
   } catch (err) {
     logger.log({
       level: "info",
@@ -30,7 +29,6 @@ async function deleteTeamValidator(req, res, next) {
       error: err.message,
     });
   }
-
 }
 
 module.exports = deleteTeamValidator;

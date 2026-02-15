@@ -2,7 +2,7 @@ const logger = require("../../helper/logger");
 const sendResponse = require("../../helper/sendResponse");
 const userModel = require("../../models/userModel");
 
-// user profile update controller 
+// user profile update controller
 async function updateProfileController(req, res) {
   try {
     const userId = req.userId;
@@ -12,7 +12,7 @@ async function updateProfileController(req, res) {
 
     if (!user) {
       return sendResponse(res, 404, "failure", "User not found");
-    };
+    }
 
     if (name !== undefined) {
       user.name = name;
@@ -23,24 +23,23 @@ async function updateProfileController(req, res) {
     }
 
     if (location !== undefined) {
-      user.location = location
+      user.location = location;
     }
 
     if (bio !== undefined) {
-      user.bio = bio
+      user.bio = bio;
     }
 
-   await user.save();
+    await user.save();
 
-   const newUser = {
-      name:user?.name,
-      designation:user?.designation,
-      location:user?.location,
-      bio:user?.bio,
+    const newUser = {
+      name: user?.name,
+      designation: user?.designation,
+      location: user?.location,
+      bio: user?.bio,
     };
 
     return sendResponse(res, 200, "success", "User updated", newUser);
-
   } catch (error) {
     logger.log({
       level: "info",
@@ -48,6 +47,6 @@ async function updateProfileController(req, res) {
       error: err.message,
     });
   }
-};
+}
 
-module.exports=updateProfileController;
+module.exports = updateProfileController;

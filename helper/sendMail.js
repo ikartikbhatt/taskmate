@@ -1,112 +1,82 @@
-require("dotenv").config();
-const axios = require("axios");
+const nodemailer = require("nodemailer");
 const otpTemplate = require("../utils/otpTemplate");
 const loginAlertTemplate = require("../utils/loginOtpTemplate");
 const SignUpTemplate = require("../utils/SignUPTemplate");
 const logger = require("./logger");
+const dotenv = require("dotenv");
+dotenv.config();
 
-const BREVO_URL = "https://api.brevo.com/v3/smtp/email";
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER?.trim(),
+    pass: process.env.GMAIL_PASS?.trim(),
+  },
+});
 
-const SENDER_EMAIL = process.env.BREVO_SENDER_EMAIL;
-
-if (!SENDER_EMAIL) {
-  throw new Error("❌ BREVO_SENDER_EMAIL is not defined in environment variables");
-}
-
-const headers = {
-  "api-key": process.env.BREVO_API_KEY,
-  "Content-Type": "application/json",
-  accept: "application/json",
-};
-
-// ================= OTP =================
+// ship otp
 async function shipOTP({ otp, receiver, type }) {
-  try {
-    if (type !== "email") return false;
-
-    await axios.post(
-      BREVO_URL,
-      {
-        sender: {
-          name: "Task Mate",
-          email: SENDER_EMAIL,
-        },
-        to: [{ email: receiver }],
-        subject: "🔒 OTP Verification",
-        htmlContent: otpTemplate({
-          otp,
-          title: "OTP Verification",
-          message: "Use the OTP below to continue:",
-        }),
-      },
-      { headers }
-    );
-
-    logger.info("✅ OTP mail sent", { receiver });
-    return true;
-  } catch (error) {
-    logger.error("❌ Brevo OTP failed", {
-      error: error.response?.data || error.message,
+  if (type == "email") {
+    const info = await transporter.sendMail({
+      from: `"Task Mate" <${process.env.GMAIL_USER}>`,
+      to: receiver,
+      subject: "🔒 OTP Verification for Password Reset",
+      html: otpTemplate({
+        otp,
+        title: "OTP Verification for Password Reset",
+        message:
+          "We've received a request to reset your password. Use the OTP below to proceed:",
+      }),
     });
-    throw error;
+
+    logger.log({
+      level: "info",
+      message: "OTP on mail sent Successfully",
+      messageId: info.messageId,
+    });
+  } else if (type == "mobile") {
+    logger.log({
+      level: "info",
+      message: "OTP on mobile service under construction",
+    });
   }
 }
 
-// ================= LOGIN ALERT =================
 async function loginMail({ receiver, userName, ip, device }) {
-  try {
-    await axios.post(
-      BREVO_URL,
-      {
-        sender: { name: "Task Mate", email: SENDER_EMAIL },
-        to: [{ email: receiver }],
-        subject: "🔔 New Login Alert",
-        htmlContent: loginAlertTemplate({
-          dateTime: new Date().toLocaleString(),
-          userName,
-          ip,
-          location: "Unknown",
-          device,
-        }),
-      },
-      { headers }
-    );
-
-    logger.info("✅ Login mail sent", { receiver });
-    return true;
-  } catch (error) {
-    logger.error("❌ Login mail failed", {
-      error: error.response?.data || error.message,
-    });
-    return false;
-  }
+  const info = await transporter.sendMail({
+    from: `"Task Mate" <${process.env.GMAIL_USER}>`,
+    to: receiver,
+    subject: "🔔 New Login Alert",
+    html: loginAlertTemplate({
+      dateTime: new Date().toLocaleString(),
+      userName,
+      ip,
+      location: "Unknown Location",
+      device,
+      secureAccountUrl: "http://localhost:8080/taskmate/auth/resetpass",
+    }),
+  });
+  logger.log({
+    level: "info",
+    message: "Login alert mail sent successfully",
+    messageId: info.messageId,
+  });
 }
-
-// ================= SIGNUP =================
 async function SignUPMail({ receiver, userName }) {
-  try {
-    await axios.post(
-      BREVO_URL,
-      {
-        sender: { name: "Task Mate", email: SENDER_EMAIL },
-        to: [{ email: receiver }],
-        subject: "🎉 Welcome to Task Mate",
-        htmlContent: SignUpTemplate({
-          dateTime: new Date().toLocaleString(),
-          userName,
-        }),
-      },
-      { headers }
-    );
-
-    logger.info("✅ Signup mail sent", { receiver });
-    return true;
-  } catch (error) {
-    logger.error("❌ Signup mail failed", {
-      error: error.response?.data || error.message,
-    });
-    return false;
-  }
+  const info = await transporter.sendMail({
+    from: `"Task Mate" <${process.env.GMAIL_USER}>`,
+    to: receiver,
+    subject: "🔔 Task Mate SignUp",
+    html: SignUpTemplate({
+      dateTime: new Date().toLocaleString(),
+      userName,
+    }),
+  });
+  logger.log({
+    level: "info",
+    message: "Welcom mail sent successfully",
+    messageId: info.messageId,
+  });
 }
 
 module.exports = { shipOTP, loginMail, SignUPMail };
