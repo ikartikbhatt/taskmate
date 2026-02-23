@@ -3,14 +3,14 @@ const logger = require("../../helper/logger");
 const teamModel = require("../../models/teamModel");
 
 // list admin team avlidator
-async function listAdminTeam(req, res) {
+async function listMembersTeamController(req, res) {
   try {
     const userId = req.userId;
 
     // console.log(userId);
 
     const teams = await teamModel
-      .find({ "members.userId": userId, "members.role": "admin" })
+      .find({ "members.userId": userId, "members.role": "member" })
       .select("teamName teamDescription teamKey");
 
     if (!teams) {
@@ -27,4 +27,4 @@ async function listAdminTeam(req, res) {
   }
 }
 
-module.exports = listAdminTeam;
+module.exports = listMembersTeamController;

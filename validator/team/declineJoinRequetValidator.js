@@ -8,7 +8,7 @@ const teamKeyRegex = new RegExp(config.regex.teamKeyRegex);
 
 // Request join team
 
-async function acceptJoinTeamValidator(req, res, next) {
+async function declineJoinTeamValidator(req, res, next) {
   try {
     const userId = req.userId;
     const { teamKey, requestUserId } = req.body;
@@ -71,16 +71,16 @@ async function acceptJoinTeamValidator(req, res, next) {
       return sendResponse(res, 400, "failure", "Kindly join the team first");
     }
 
-    req.acceptJoinTeam = { teamKey, requestUserId };
+    req.declineJoinTeam = { teamKey, requestUserId };
 
     next();
   } catch (err) {
     logger.log({
       level: "info",
-      message: "error in acceptJoinTeamValidator >>>>>",
+      message: "error in declineJoinTeamValidator >>>>>",
       error: err.message,
     });
   }
 }
 
-module.exports = acceptJoinTeamValidator;
+module.exports = declineJoinTeamValidator;
