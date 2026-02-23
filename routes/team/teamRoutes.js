@@ -15,6 +15,9 @@ const getPendingRequestsController = require("../../controllers/teamController/g
 const getPendingRequesValidator = require("../../validator/team/getPendingRequestValidator");
 const acceptJoinTeamValidator = require("../../validator/team/acceptJoinTeamValidator");
 const acceptJoinTeam = require("../../controllers/teamController/acceptJoinTeam");
+const declineJoinTeamValidator = require("../../validator/team/declineJoinRequetValidator");
+const declineJoinTeamController = require("../../controllers/teamController/declineJoinTeamController");
+const listMembersTeamController = require("../../controllers/teamController/listMembersTeam");
 
 // create team
 teamRouter.post("/createTeam", createTeamValidator, createTeam);
@@ -47,5 +50,15 @@ teamRouter.post(
   getPendingRequesValidator,
   getPendingRequestsController
 );
+
+// Decline join request
+teamRouter.post(
+  "/declineJoinTeam",
+  declineJoinTeamValidator,
+  declineJoinTeamController
+);
+
+// list members team
+teamRouter.get("/listMembersTeam", listMembersTeamController);
 
 module.exports = teamRouter;

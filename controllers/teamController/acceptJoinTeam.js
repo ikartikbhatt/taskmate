@@ -1,15 +1,16 @@
 const teamModel = require("../../models/teamModel");
 const userModel = require("../../models/userModel");
 const sendResponse = require("../../helper/sendResponse");
+const requestAcceptMail = require("../../helper/sendMail");
 const logger = require("../../helper/logger");
 
 // create team
 async function acceptJoinTeam(req, res) {
   try {
     const userId = req.userId;
-    const { teamKey, requestUserId } = req.aceptJoinTeam;
+    const { teamKey, requestUserId } = req.acceptJoinTeam;
 
-    const getUserName = await userModel.findById(userId);
+    const adminUser = await userModel.findById(userId);
     // const createTeam = await teamModel.create({
     //   adminUserId: userId,
     //   teamName: teamName,
@@ -39,11 +40,26 @@ async function acceptJoinTeam(req, res) {
       { new: true }
     );
 
-    console.log(addToTeam);
+    // console.log(addToTeam);
+    const acceptedUser = await userModel.findById(requestUserId);
+
+    // Send email notification to accepted user (async, don't wait)
+    requestAcceptMail
+      .requestAcceptMail({
+        receiver: acceptedUser.email,
+        userName: acceptedUser.name,
+        teamName: addToTeam.teamName,
+        teamKey: addToTeam.teamKey,
+        teamAdminName: adminUser.name,
+        userRole: "Member",
+      })
+      .catch((err) => {
+        console.error("Failed to send acceptance email:", err);
+      });
 
     // creating create team data object -->
     const data = {
-      adminName: getUserName?.name,
+      adminName: adminUser?.name,
       teamName: addToTeam?.teamName,
       teamDescription: addToTeam?.teamDescription,
       teamProfilePic: null,
@@ -53,10 +69,16 @@ async function acceptJoinTeam(req, res) {
       createdAt: addToTeam?.createdAt,
     };
 
-    return sendResponse(res, 200, "success", "Team Created Successfully", data);
+    return sendResponse(
+      res,
+      200,
+      "success",
+      "Team join request accepted successfully",
+      data
+    );
   } catch (err) {
     logger.log({
-      level: "info",
+      level: "error",
       message: "error in acceptJoinTeamController >>>>>",
       error: err.message,
     });

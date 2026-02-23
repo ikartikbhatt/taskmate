@@ -2,6 +2,8 @@ const nodemailer = require("nodemailer");
 const otpTemplate = require("../utils/otpTemplate");
 const loginAlertTemplate = require("../utils/loginOtpTemplate");
 const SignUpTemplate = require("../utils/SignUPTemplate");
+const requestJoinTeamTemplate = require("../utils/requestJoinTeamTemplate");
+const requestAcceptTemplate = require("../utils/requetAcceptTemplate");
 const logger = require("./logger");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -53,7 +55,7 @@ async function loginMail({ receiver, userName, ip, device }) {
       ip,
       location: "Unknown Location",
       device,
-      secureAccountUrl: "http://localhost:8080/taskmate/auth/resetpass",
+      // secureAccountUrl: "http://localhost:8080/taskmate/auth/resetpass",
     }),
   });
   logger.log({
@@ -79,4 +81,83 @@ async function SignUPMail({ receiver, userName }) {
   });
 }
 
-module.exports = { shipOTP, loginMail, SignUPMail };
+// Send team join request notification to admin
+async function requestJoinTeamMail({
+  receiver,
+  teamOwnerName,
+  requesterName,
+  requesterEmail,
+  requesterId,
+  requesterMessage,
+  teamName,
+  teamKey,
+}) {
+  const info = await transporter.sendMail({
+    from: `"Task Mate" <${process.env.GMAIL_USER}>`,
+    to: receiver,
+    subject: `🔔 New Team Join Request from ${requesterName} - Task Mate`,
+    html: requestJoinTeamTemplate({
+      teamOwnerName,
+      requesterName,
+      requesterEmail,
+      requesterId,
+      requesterMessage,
+      teamName,
+      teamKey,
+      requestDate: new Date().toLocaleString(),
+      appUrl: process.env.CLIENT_URL || "http://localhost:3000",
+    }),
+  });
+  logger.log({
+    level: "info",
+    message: "Team join request mail sent successfully",
+    messageId: info.messageId,
+  });
+}
+
+// Send request accepted notification to user
+async function requestAcceptMail({
+  receiver,
+  userName,
+  teamName,
+  teamKey,
+  teamAdminName,
+  userRole,
+}) {
+  const info = await transporter.sendMail({
+    from: `"Task Mate" <${process.env.GMAIL_USER}>`,
+    to: receiver,
+    subject: `🎉 You've been added to ${teamName} - Task Mate`,
+    html: requestAcceptTemplate({
+      userName,
+      teamName,
+      teamKey,
+      teamAdminName,
+      userRole: userRole || "Member",
+      joinedDate: new Date().toLocaleDateString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
+      teamDashboardUrl: `${process.env.CLIENT_URL || "http://localhost:3000"}/team/${teamKey}/dashboard`,
+      helpCenterUrl: `${process.env.CLIENT_URL || "http://localhost:3000"}/help`,
+      contactSupportUrl: `${process.env.CLIENT_URL || "http://localhost:3000"}/support`,
+      privacyPolicyUrl: `${process.env.CLIENT_URL || "http://localhost:3000"}/privacy`,
+      termsUrl: `${process.env.CLIENT_URL || "http://localhost:3000"}/terms`,
+    }),
+  });
+  logger.log({
+    level: "info",
+    message: "Request accepted mail sent successfully",
+    messageId: info.messageId,
+  });
+}
+
+module.exports = {
+  shipOTP,
+  loginMail,
+  SignUPMail,
+  requestJoinTeamMail,
+  requestAcceptMail,
+};
