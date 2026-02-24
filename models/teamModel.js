@@ -28,12 +28,12 @@ const teamSchema = new mongoose.Schema(
         userId: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "user",
+          required: true,
         },
         role: {
           type: String,
           enum: ["admin", "member"],
           default: "member",
-          required: true,
         },
         joinedAt: { type: Date, default: Date.now },
       },

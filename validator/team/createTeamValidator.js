@@ -53,17 +53,17 @@ async function createTeamValidator(req, res, next) {
     if (checkForDuplicateTeam)
       return sendResponse(res, 400, "failure", "Team Already found");
 
-    // only admin can create a team
-    const isAdmin = await userModel.findById(userId).select("role -_id");
+    // // only admin can create a team
+    // const isAdmin = await userModel.findById(userId).select("role -_id");
 
-    if (isAdmin.role != "admin") {
-      return sendResponse(
-        res,
-        400,
-        "failre",
-        "Admin user can only create team"
-      );
-    }
+    // if (isAdmin.role != "admin") {
+    //   return sendResponse(
+    //     res,
+    //     400,
+    //     "failre",
+    //     "Admin user can only create team"
+    //   );
+    // }
 
     //attach the filtered request to request handler
     req.createTeam = { teamName, teamDescription, teamKey };

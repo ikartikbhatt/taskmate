@@ -84,7 +84,7 @@ async function updateTeamNameValidator(req, res, next) {
       newTeamName,
       newTeamDescription,
     };
-    console.log("BODY FROM FRONTEND:", req.body);
+    // console.log("BODY FROM FRONTEND:", req.body);
 
     next();
   } catch (err) {

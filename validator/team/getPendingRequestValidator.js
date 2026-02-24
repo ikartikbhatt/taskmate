@@ -48,7 +48,7 @@ async function getPendingRequesValidator(req, res, next) {
       return sendResponse(res, 404, "failure", "only admin can access this");
     }
 
-    req.getTeam = team;
+    req.teamDetails = team;
     next();
   } catch (err) {
     logger.log({
