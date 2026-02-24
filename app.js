@@ -22,20 +22,17 @@ logger.log({
 });
 
 //Allow all origins (dev mode)
-const origin = ["http://localhost:3000", process.env.CLIENT_URL].filter(
-  Boolean
-);
-
 app.use(
   cors({
-    origin: origin,
+    origin: [
+      "http://localhost:3000",
+      process.env.CLIENT_URL,
+    ].filter(Boolean),
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   })
 );
-
-// app.options('*', cors());
 
 logger.log({
   level: "info",

@@ -2,28 +2,33 @@ const sendResponse = require("../../helper/sendResponse");
 const logger = require("../../helper/logger");
 const teamModel = require("../../models/teamModel");
 
-// list admin team avlidator
+// list admin teams
 async function listAdminTeam(req, res) {
   try {
     const userId = req.userId;
 
-    // console.log(userId);
-
     const teams = await teamModel
-      .find({ "members.userId": userId, "members.role": "admin" })
-      .select("teamName teamDescription teamKey");
+      .find({
+        members: {
+          $elemMatch: {userId: userId,role: "admin",},
+        },
+      })
+      .select("teamName teamDescription teamKey members createdAt");
 
-    if (!teams) {
-      return sendResponse(res, 400, "failure", "You do not admin of any team");
-    }
-
-    return sendResponse(res, 200, "success", "team found are:-", teams);
+    return sendResponse(
+      res,
+      200,
+      "success",
+      "Admin teams fetched successfully",
+      teams
+    );
   } catch (err) {
     logger.log({
-      level: "info",
-      message: "error in searchTeamValidator >>>>>",
+      level: "error",
+      message: "error in listAdminTeam >>>>>",
       error: err.message,
     });
+    return sendResponse(res, 500, "failure", "Server error");
   }
 }
 

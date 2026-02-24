@@ -19,7 +19,7 @@ async function deleteTeamValidator(req, res, next) {
     if (!team) return sendResponse(res, 400, "failure", "team not found");
 
     req.deleteTeam = { teamKey: team.teamKey };
-    console.log("BODY:", req.body);
+    // console.log("BODY:", req.body);
 
     next();
   } catch (err) {
