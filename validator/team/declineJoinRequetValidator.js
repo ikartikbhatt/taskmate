@@ -26,13 +26,13 @@ async function declineJoinTeamValidator(req, res, next) {
       );
     }
 
-    if (!teamKeyRegex.test(teamKey))
-      return sendResponse(
-        res,
-        400,
-        "failure",
-        "please provide proper teamKey format"
-      );
+    // if (!teamKeyRegex.test(teamKey))
+    //   return sendResponse(
+    //     res,
+    //     400,
+    //     "failure",
+    //     "please provide proper teamKey format"
+    //   );
 
     // search team
     const findTeam = await teamModel.findOne({ teamKey: teamKey });

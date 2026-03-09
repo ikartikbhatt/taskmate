@@ -10,7 +10,7 @@ async function listAdminTeam(req, res) {
     const teams = await teamModel
       .find({
         members: {
-          $elemMatch: {userId: userId,role: "admin",},
+          $elemMatch: { userId: userId, role: "admin" },
         },
       })
       .select("teamName teamDescription teamKey members createdAt");

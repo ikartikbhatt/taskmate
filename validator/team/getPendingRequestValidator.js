@@ -26,13 +26,13 @@ async function getPendingRequesValidator(req, res, next) {
       );
     }
 
-    if (!teamKeyRegex.test(teamKey))
-      return sendResponse(
-        res,
-        400,
-        "failure",
-        "please provide proper teamKey format"
-      );
+    // if (!teamKeyRegex.test(teamKey))
+    //   return sendResponse(
+    //     res,
+    //     400,
+    //     "failure",
+    //     "please provide proper teamKey format"
+    //   );
 
     const team = await teamModel.findOne({ teamKey });
 

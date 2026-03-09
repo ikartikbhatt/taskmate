@@ -18,7 +18,7 @@ const acceptJoinTeam = require("../../controllers/teamController/acceptJoinTeam"
 const declineJoinTeamValidator = require("../../validator/team/declineJoinRequetValidator");
 const declineJoinTeamController = require("../../controllers/teamController/declineJoinTeamController");
 const listMembersTeamController = require("../../controllers/teamController/listMembersTeam");
-const getTeamDetails=require("../../controllers/teamController/getTeamDetails");
+const getTeamDetails = require("../../controllers/teamController/getTeamDetails");
 
 // create team
 teamRouter.post("/createTeam", createTeamValidator, createTeam);
@@ -36,17 +36,28 @@ teamRouter.post("/searchTeam", searchTeamValidator, SearchTeam);
 teamRouter.get("/listAdminTeams", listAdminTeam);
 
 // Request join Team
-teamRouter.post("/requestJoinTeam",requestjoinTeamValidator,requestJoinTeamController
+teamRouter.post(
+  "/requestJoinTeam",
+  requestjoinTeamValidator,
+  requestJoinTeamController
 );
 
 //accept join request
 teamRouter.post("/acceptJoinTeam", acceptJoinTeamValidator, acceptJoinTeam);
 
 // get pending request
-teamRouter.post("/pendingRequests", getPendingRequesValidator, getPendingRequestsController);
+teamRouter.post(
+  "/pendingRequests",
+  getPendingRequesValidator,
+  getPendingRequestsController
+);
 
 // Decline join request
-teamRouter.post("/declineJoinTeam",declineJoinTeamValidator,declineJoinTeamController);
+teamRouter.post(
+  "/declineJoinTeam",
+  declineJoinTeamValidator,
+  declineJoinTeamController
+);
 
 // list members team
 teamRouter.get("/listMembersTeam", listMembersTeamController);

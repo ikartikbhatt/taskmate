@@ -71,7 +71,7 @@ async function createTeamValidator(req, res, next) {
     next();
   } catch (err) {
     logger.log({
-      level: "info",
+      level: "error",
       message: "error in createTeamValidator >>>>>",
       error: err.message,
     });

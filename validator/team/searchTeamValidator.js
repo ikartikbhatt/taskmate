@@ -18,13 +18,13 @@ async function searchTeamValidator(req, res, next) {
 
     const teamKeyRegex = new RegExp(config.regex.teamKeyRegex);
 
-    if (!teamKeyRegex.test(teamKey))
-      return sendResponse(
-        res,
-        400,
-        "failure",
-        "please provide proper teamKey format"
-      );
+    // if (!teamKeyRegex.test(teamKey))
+    //   return sendResponse(
+    //     res,
+    //     400,
+    //     "failure",
+    //     "please provide proper teamKey format"
+    //   );
 
     const findTeamKey = await teamModel.findOne({ teamKey });
 

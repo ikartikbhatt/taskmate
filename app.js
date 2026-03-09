@@ -1,7 +1,7 @@
-const dotenv = require("dotenv");
 const express = require("express");
 const cookie = require("cookie-parser");
 const cors = require("cors");
+const dotenv = require("dotenv");
 
 //imports
 const serverListenMessage = require("./helper/serverListenMessage");
@@ -24,10 +24,7 @@ logger.log({
 //Allow all origins (dev mode)
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      process.env.CLIENT_URL,
-    ].filter(Boolean),
+    origin: ["http://localhost:3000", process.env.CLIENT_URL].filter(Boolean),
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],

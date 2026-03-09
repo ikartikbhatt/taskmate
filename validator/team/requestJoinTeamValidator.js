@@ -27,13 +27,13 @@ async function requestJoinTeamValidator(req, res, next) {
       );
     }
 
-    if (!teamKeyRegex.test(teamKey))
-      return sendResponse(
-        res,
-        400,
-        "failure",
-        "please provide proper teamKey format"
-      );
+    // if (!teamKeyRegex.test(teamKey))
+    //   return sendResponse(
+    //     res,
+    //     400,
+    //     "failure",
+    //     "please provide proper teamKey format"
+    //   );
 
     if (message && (message.length < 8 || message.length > 200)) {
       return sendResponse(

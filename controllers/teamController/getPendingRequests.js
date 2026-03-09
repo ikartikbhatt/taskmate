@@ -4,14 +4,20 @@ const teamModel = require("../../models/teamModel");
 
 async function getPendingRequestsController(req, res) {
   try {
-    const {teamKey} = req.teamDetails;
+    const { teamKey } = req.teamDetails;
 
     const team = await teamModel
-        .findOne({ teamKey })
-        .populate("pendingRequests.userId", "name email");
-        // console.log(team)
+      .findOne({ teamKey })
+      .populate("pendingRequests.userId", "name email");
+    // console.log(team)
 
-    return sendResponse(res, 200, "success", "pending requet fetched succefully", team.pendingRequests);
+    return sendResponse(
+      res,
+      200,
+      "success",
+      "pending requet fetched succefully",
+      team.pendingRequests
+    );
   } catch (err) {
     logger.log({
       level: "info",

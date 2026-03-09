@@ -43,7 +43,7 @@ async function acceptJoinTeam(req, res) {
     // console.log(addToTeam);
     const acceptedUser = await userModel.findById(requestUserId);
 
-    // Send email notification to accepted user (async, don't wait)
+    // Send email notification to accepted user
     requestAcceptMail
       .requestAcceptMail({
         receiver: acceptedUser.email,
